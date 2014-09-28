@@ -1,0 +1,144 @@
+SQL Assignment Submission
+
+=== 1
+SELECT player_id, result FROM results WHERE event_id = 'E28';
+**************** RESULT ***************************************************************
+player_id  | result 
+------------+--------
+ GARCIANI01 |     13
+ TRAMMTER01 |  13.16
+ CREARMAR01 |  13.22
+(3 rows)
+
+=============================================================================================
+
+=== 2
+SELECT count(*) FROM players WHERE SUBSTR(name,0,2) IN ('A', 'E', 'I', 'O', 'U');
+**************** RESULT ***************************************************************
+count 
+-------
+    84
+(1 row)
+=============================================================================================
+
+=== 3
+SELECT count(*) FROM events WHERE result_noted_in = 'points' AND olympic_id = 'SYD2000';
+**************** RESULT ***************************************************************
+ count 
+-------
+     2
+(1 row)
+=============================================================================================
+
+=== 4
+WITH 	syd_events AS (SELECT event_id FROM events WHERE olympic_id = 'SYD2000'),
+	syd_results AS (SELECT syd_events.event_id, player_id, medal 
+		FROM syd_events LEFT OUTER JOIN results 
+		ON syd_events.event_id = results.event_id),
+	country_medals AS (SELECT medal, country_id FROM syd_results NATURAL JOIN players), 
+	country_medal_count AS (SELECT country_id, count(country_id) FROM country_medals GROUP BY country_id)
+SELECT country_id FROM country_medal_count NATURAL JOIN countries ORDER BY count*1.0/population*1.0 ASC LIMIT 5;
+**************** RESULT ***************************************************************
+country_id 
+------------
+ CHN
+ FRA
+ MEX
+ CAN
+ NGR
+(5 rows)
+=============================================================================================
+
+=== 5
+WITH num_players AS (SELECT country_id, count(country_id) FROM players GROUP BY country_id)
+SELECT name country_name, count num_players FROM num_players NATURAL JOIN countries;
+**************** RESULT ***************************************************************
+result returns too many tuples to be efficently displayed on this document
+=============================================================================================
+
+=== 6
+SELECT name, country_id, birthdate FROM players WHERE RIGHT(name, 1) = 'd' ORDER BY country_id ASC, birthdate DESC;
+**************** RESULT ***************************************************************
+                   name                   | country_id | birthdate  
+------------------------------------------+------------+------------
+ Abderrahmane Hammad                      | ALG        | 1980-10-04
+ Mark Ormrod                              | AUS        | 1973-10-26
+ Yunaika Crawford                         | CUB        | 1981-12-09
+ Lars Conrad                              | GER        | 1980-09-04
+ Beverly McDonald                         | JAM        | 1978-07-21
+ Michael Blackwood                        | JAM        | 1977-08-05
+ Pieter van den Hoogenband                | NED        | 1974-07-06
+ Trine Hattestad                          | NOR        | 1972-02-04
+ Darian Townsend                          | RSA        | 1975-08-06
+ BJ Bedford                               | USA        | 1981-04-08
+ Amanda Beard                             | USA        | 1980-10-22
+ Shawn Crawford                           | USA        | 1978-11-20
+ Jon Drummond                             | USA        | 1972-01-13
+(13 rows)
+
+=============================================================================================
+
+=== 7
+WITH b_years AS (SELECT medal, name, date_part('year', birthdate) byear FROM results NATURAL JOIN players),
+	b_count AS (SELECT byear, count(byear) numplayers FROM b_years GROUP BY byear),
+	g_count AS (SELECT byear, count(medal) numgolds FROM b_years WHERE medal = 'GOLD' GROUP BY byear)
+SELECT * FROM b_count NATURAL JOIN g_count ORDER BY byear ASC;
+**************** RESULT ***************************************************************
+ byear | numplayers | numgolds 
+-------+------------+----------
+  1971 |         67 |       16
+  1972 |         38 |       10
+  1973 |         46 |       13
+  1974 |         52 |       21
+  1975 |         47 |       20
+  1976 |         47 |       25
+  1977 |         31 |        8
+  1978 |         68 |       24
+  1979 |         43 |       10
+  1980 |         51 |       20
+  1981 |         31 |       10
+  1982 |         23 |        9
+  1983 |         29 |        9
+  1984 |         43 |       15
+  1985 |         55 |       21
+(15 rows)
+
+=============================================================================================
+
+=== 8
+WITH ievents AS (SELECT event_id FROM events WHERE is_team_event = 0),
+	iresults AS (SELECT DISTINCT event_id, medal FROM ievents NATURAL JOIN results)
+SELECT event_id FROM iresults GROUP BY event_id HAVING COUNT(medal) = 2;
+**************** RESULT ***************************************************************
+event_id 
+----------
+ E108   
+(1 row)
+
+=============================================================================================
+
+=== 9
+WITH bfly AS (SELECT event_id FROM events WHERE name LIKE '%Butterfly%'),
+	bresults AS (SELECT bfly.event_id, medal, result FROM bfly LEFT OUTER JOIN results ON bfly.event_id = results.event_id WHERE medal <> 'BRONZE')
+SELECT * FROM bresults;
+**************** RESULT ***************************************************************
+<INSERT YOUR RESULT HERE>
+=============================================================================================
+
+=== 10
+CREATE TABLE "CountryMedals" AS (WITH tevents AS (SELECT event_id FROM events WHERE is_team_event = 1),
+	tresults AS (SELECT tevents.event_id, player_id, medal, result FROM tevents LEFT OUTER JOIN results ON results.event_id = tevents.event_id),
+	res_c AS (SELECT event_id, country_id, medal, result FROM tresults NATURAL JOIN players)
+SELECT * FROM res_c);
+**************** RESULT ***************************************************************
+It created the table
+=============================================================================================
+
+=== 11
+SELECT c.name, COUNT(p.name)
+      FROM countries c INNER JOIN players p ON c.country_id = p.country_id
+      WHERE extract(year from p.birthdate) = 1975
+      GROUP BY c.name;
+**************** RESULT ***************************************************************
+<INSERT YOUR RESULT HERE>
+=============================================================================================
