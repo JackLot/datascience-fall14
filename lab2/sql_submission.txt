@@ -79,30 +79,30 @@ SELECT name, country_id, birthdate FROM players WHERE RIGHT(name, 1) = 'd' ORDER
 =============================================================================================
 
 === 7
-WITH b_years AS (SELECT medal, name, date_part('year', birthdate) byear FROM results NATURAL JOIN players),
-	b_count AS (SELECT byear, count(byear) numplayers FROM b_years GROUP BY byear),
-	g_count AS (SELECT byear, count(medal) numgolds FROM b_years WHERE medal = 'GOLD' GROUP BY byear)
-SELECT * FROM b_count NATURAL JOIN g_count ORDER BY byear ASC;
+WITH aEvents AS (SELECT event_id FROM events WHERE olympic_id = 'ATH2004'),
+	b_years AS (SELECT name, date_part('year', birthdate) byear, count(name) numGolds FROM (aEvents LEFT JOIN results ON aEvents.event_id = results.event_id) NATURAL JOIN players WHERE medal = 'GOLD' GROUP BY name, byear),
+	numPerYear AS (SELECT count(name) num_players, date_part('year', birthdate) birthyear FROM players GROUP BY date_part('year', birthdate)),
+	numGolds AS (SELECT byear, sum(numGolds) num_golds FROM b_years GROUP BY byear ORDER BY byear)
+SELECT birthyear, num_players, num_golds FROM numPerYear JOIN numGolds ON numPerYear.birthyear = numGolds.byear ORDER BY birthyear;
 **************** RESULT ***************************************************************
- byear | numplayers | numgolds 
--------+------------+----------
-  1971 |         67 |       16
-  1972 |         38 |       10
-  1973 |         46 |       13
-  1974 |         52 |       21
-  1975 |         47 |       20
-  1976 |         47 |       25
-  1977 |         31 |        8
-  1978 |         68 |       24
-  1979 |         43 |       10
-  1980 |         51 |       20
-  1981 |         31 |       10
-  1982 |         23 |        9
-  1983 |         29 |        9
-  1984 |         43 |       15
-  1985 |         55 |       21
+ birthyear | num_players | num_golds 
+-----------+-------------+-----------
+      1971 |          45 |         9
+      1972 |          29 |         3
+      1973 |          31 |         5
+      1974 |          31 |         9
+      1975 |          32 |        11
+      1976 |          24 |        17
+      1977 |          26 |         4
+      1978 |          40 |        15
+      1979 |          36 |         7
+      1980 |          29 |        12
+      1981 |          22 |         2
+      1982 |          19 |         2
+      1983 |          23 |         2
+      1984 |          30 |         7
+      1985 |          36 |        11
 (15 rows)
-
 =============================================================================================
 
 === 8
@@ -118,11 +118,19 @@ event_id
 =============================================================================================
 
 === 9
-WITH bfly AS (SELECT event_id FROM events WHERE name LIKE '%Butterfly%'),
-	bresults AS (SELECT bfly.event_id, medal, result FROM bfly LEFT OUTER JOIN results ON bfly.event_id = results.event_id WHERE medal <> 'BRONZE')
-SELECT * FROM bresults;
+WITH bfly AS (SELECT * FROM events WHERE name LIKE '%Butterfly%' AND olympic_id = 'ATH2004'),
+bresults AS (SELECT bfly.event_id, medal, result FROM bfly LEFT OUTER JOIN results ON bfly.event_id = results.event_id WHERE medal <> 'BRONZE'),
+silverResults AS (SELECT event_id, result FROM bresults WHERE medal = 'SILVER'),
+goldResults AS (SELECT event_id, result FROM bresults WHERE medal = 'GOLD')
+SELECT goldResults.event_id, ABS(goldResults.result - silverResults.result) distance FROM silverResults JOIN goldResults ON silverResults.event_id = goldResults.event_id;
 **************** RESULT ***************************************************************
-<INSERT YOUR RESULT HERE>
+ event_id |      distance      
+----------+--------------------
+ E13      | 0.0399999999999991
+ E43      |  0.519999999999996
+ E15      |               0.32
+ E45      |  0.310000000000002
+(4 rows)
 =============================================================================================
 
 === 10
@@ -135,10 +143,42 @@ It created the table
 =============================================================================================
 
 === 11
-SELECT c.name, COUNT(p.name)
+WITH has1975 as (SELECT c.name, COUNT(p.name)
       FROM countries c INNER JOIN players p ON c.country_id = p.country_id
       WHERE extract(year from p.birthdate) = 1975
-      GROUP BY c.name;
+      GROUP BY c.name)
+SELECT countries.name, coalesce(has1975.count,0) AS count FROM countries LEFT OUTER JOIN has1975 ON countries.name = has1975.name ORDER BY count DESC;
 **************** RESULT ***************************************************************
-<INSERT YOUR RESULT HERE>
+                   name                   | count 
+------------------------------------------+-------
+ United States                            |     5
+ South Africa                             |     4
+ Japan                                    |     3
+ Australia                                |     3
+ Sweden                                   |     2
+ Denmark                                  |     1
+ Eritrea                                  |     1
+ Romania                                  |     1
+ Italy                                    |     1
+ Jamaica                                  |     1
+ Kazakhstan                               |     1
+ Belarus                                  |     1
+ Estonia                                  |     1
+ Ethiopia                                 |     1
+ Brazil                                   |     1
+ Lithuania                                |     1
+ Cuba                                     |     1
+ United Kingdom                           |     1
+ Germany                                  |     1
+ Czech Republic                           |     1
+ Saudi Arabia                             |     0
+ Latvia                                   |     0
+ Morocco                                  |     0
+ Mexico                                   |     0
+ Mozambique                               |     0
+ Netherlands                              |     0 ... ETC ...
+
+There were more tuples but I didn't include them, they are just countries with 0 1975 birthdays
+
+(58 rows) in total
 =============================================================================================
