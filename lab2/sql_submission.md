@@ -1,14 +1,14 @@
 SQL Assignment Submission
 
 === 1
-SELECT player_id, result FROM results WHERE event_id = 'E28';
+'SELECT player_id, result FROM results WHERE event_id = 'E28';'
 **************** RESULT ***************************************************************
-player_id  | result 
+'player_id  | result 
 ------------+--------
  GARCIANI01 |     13
  TRAMMTER01 |  13.16
  CREARMAR01 |  13.22
-(3 rows)
+(3 rows)'
 
 =============================================================================================
 
