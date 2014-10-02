@@ -1,0 +1,184 @@
+SQL Assignment Submission
+
+=== 1
+SELECT player_id, result FROM results WHERE event_id = 'E28';
+**************** RESULT ***************************************************************
+player_id  | result 
+------------+--------
+ GARCIANI01 |     13
+ TRAMMTER01 |  13.16
+ CREARMAR01 |  13.22
+(3 rows)
+
+=============================================================================================
+
+=== 2
+SELECT count(*) FROM players WHERE SUBSTR(name,0,2) IN ('A', 'E', 'I', 'O', 'U');
+**************** RESULT ***************************************************************
+count 
+-------
+    84
+(1 row)
+=============================================================================================
+
+=== 3
+SELECT count(*) FROM events WHERE result_noted_in = 'points' AND olympic_id = 'SYD2000';
+**************** RESULT ***************************************************************
+ count 
+-------
+     2
+(1 row)
+=============================================================================================
+
+=== 4
+WITH 	syd_events AS (SELECT event_id FROM events WHERE olympic_id = 'SYD2000'),
+	syd_results AS (SELECT syd_events.event_id, player_id, medal 
+		FROM syd_events LEFT OUTER JOIN results 
+		ON syd_events.event_id = results.event_id),
+	country_medals AS (SELECT medal, country_id FROM syd_results NATURAL JOIN players), 
+	country_medal_count AS (SELECT country_id, count(country_id) FROM country_medals GROUP BY country_id)
+SELECT country_id FROM country_medal_count NATURAL JOIN countries ORDER BY count*1.0/population*1.0 ASC LIMIT 5;
+**************** RESULT ***************************************************************
+country_id 
+------------
+ CHN
+ FRA
+ MEX
+ CAN
+ NGR
+(5 rows)
+=============================================================================================
+
+=== 5
+WITH num_players AS (SELECT country_id, count(country_id) FROM players GROUP BY country_id)
+SELECT name country_name, count num_players FROM num_players NATURAL JOIN countries;
+**************** RESULT ***************************************************************
+result returns too many tuples to be efficently displayed on this document
+=============================================================================================
+
+=== 6
+SELECT name, country_id, birthdate FROM players WHERE RIGHT(name, 1) = 'd' ORDER BY country_id ASC, birthdate DESC;
+**************** RESULT ***************************************************************
+                   name                   | country_id | birthdate  
+------------------------------------------+------------+------------
+ Abderrahmane Hammad                      | ALG        | 1980-10-04
+ Mark Ormrod                              | AUS        | 1973-10-26
+ Yunaika Crawford                         | CUB        | 1981-12-09
+ Lars Conrad                              | GER        | 1980-09-04
+ Beverly McDonald                         | JAM        | 1978-07-21
+ Michael Blackwood                        | JAM        | 1977-08-05
+ Pieter van den Hoogenband                | NED        | 1974-07-06
+ Trine Hattestad                          | NOR        | 1972-02-04
+ Darian Townsend                          | RSA        | 1975-08-06
+ BJ Bedford                               | USA        | 1981-04-08
+ Amanda Beard                             | USA        | 1980-10-22
+ Shawn Crawford                           | USA        | 1978-11-20
+ Jon Drummond                             | USA        | 1972-01-13
+(13 rows)
+
+=============================================================================================
+
+=== 7
+WITH aEvents AS (SELECT event_id FROM events WHERE olympic_id = 'ATH2004'),
+	b_years AS (SELECT name, date_part('year', birthdate) byear, count(name) numGolds FROM (aEvents LEFT JOIN results ON aEvents.event_id = results.event_id) NATURAL JOIN players WHERE medal = 'GOLD' GROUP BY name, byear),
+	numPerYear AS (SELECT count(name) num_players, date_part('year', birthdate) birthyear FROM players GROUP BY date_part('year', birthdate)),
+	numGolds AS (SELECT byear, sum(numGolds) num_golds FROM b_years GROUP BY byear ORDER BY byear)
+SELECT birthyear, num_players, num_golds FROM numPerYear JOIN numGolds ON numPerYear.birthyear = numGolds.byear ORDER BY birthyear;
+**************** RESULT ***************************************************************
+ birthyear | num_players | num_golds 
+-----------+-------------+-----------
+      1971 |          45 |         9
+      1972 |          29 |         3
+      1973 |          31 |         5
+      1974 |          31 |         9
+      1975 |          32 |        11
+      1976 |          24 |        17
+      1977 |          26 |         4
+      1978 |          40 |        15
+      1979 |          36 |         7
+      1980 |          29 |        12
+      1981 |          22 |         2
+      1982 |          19 |         2
+      1983 |          23 |         2
+      1984 |          30 |         7
+      1985 |          36 |        11
+(15 rows)
+=============================================================================================
+
+=== 8
+WITH ievents AS (SELECT event_id FROM events WHERE is_team_event = 0),
+	iresults AS (SELECT DISTINCT event_id, medal FROM ievents NATURAL JOIN results)
+SELECT event_id FROM iresults GROUP BY event_id HAVING COUNT(medal) = 2;
+**************** RESULT ***************************************************************
+event_id 
+----------
+ E108   
+(1 row)
+
+=============================================================================================
+
+=== 9
+WITH bfly AS (SELECT * FROM events WHERE name LIKE '%Butterfly%' AND olympic_id = 'ATH2004'),
+bresults AS (SELECT bfly.event_id, medal, result FROM bfly LEFT OUTER JOIN results ON bfly.event_id = results.event_id WHERE medal <> 'BRONZE'),
+silverResults AS (SELECT event_id, result FROM bresults WHERE medal = 'SILVER'),
+goldResults AS (SELECT event_id, result FROM bresults WHERE medal = 'GOLD')
+SELECT goldResults.event_id, ABS(goldResults.result - silverResults.result) distance FROM silverResults JOIN goldResults ON silverResults.event_id = goldResults.event_id;
+**************** RESULT ***************************************************************
+ event_id |      distance      
+----------+--------------------
+ E13      | 0.0399999999999991
+ E43      |  0.519999999999996
+ E15      |               0.32
+ E45      |  0.310000000000002
+(4 rows)
+=============================================================================================
+
+=== 10
+CREATE TABLE "CountryMedals" AS (WITH tevents AS (SELECT event_id FROM events WHERE is_team_event = 1),
+	tresults AS (SELECT tevents.event_id, player_id, medal, result FROM tevents LEFT OUTER JOIN results ON results.event_id = tevents.event_id),
+	res_c AS (SELECT event_id, country_id, medal, result FROM tresults NATURAL JOIN players)
+SELECT * FROM res_c);
+**************** RESULT ***************************************************************
+It created the table
+=============================================================================================
+
+=== 11
+WITH has1975 as (SELECT c.name, COUNT(p.name)
+      FROM countries c INNER JOIN players p ON c.country_id = p.country_id
+      WHERE extract(year from p.birthdate) = 1975
+      GROUP BY c.name)
+SELECT countries.name, coalesce(has1975.count,0) AS count FROM countries LEFT OUTER JOIN has1975 ON countries.name = has1975.name ORDER BY count DESC;
+**************** RESULT ***************************************************************
+                   name                   | count 
+------------------------------------------+-------
+ United States                            |     5
+ South Africa                             |     4
+ Japan                                    |     3
+ Australia                                |     3
+ Sweden                                   |     2
+ Denmark                                  |     1
+ Eritrea                                  |     1
+ Romania                                  |     1
+ Italy                                    |     1
+ Jamaica                                  |     1
+ Kazakhstan                               |     1
+ Belarus                                  |     1
+ Estonia                                  |     1
+ Ethiopia                                 |     1
+ Brazil                                   |     1
+ Lithuania                                |     1
+ Cuba                                     |     1
+ United Kingdom                           |     1
+ Germany                                  |     1
+ Czech Republic                           |     1
+ Saudi Arabia                             |     0
+ Latvia                                   |     0
+ Morocco                                  |     0
+ Mexico                                   |     0
+ Mozambique                               |     0
+ Netherlands                              |     0 ... ETC ...
+
+There were more tuples but I didn't include them, they are just countries with 0 1975 birthdays
+
+(58 rows) in total
+=============================================================================================
