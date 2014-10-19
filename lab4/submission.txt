@@ -1084,27 +1084,28 @@ w.apply_to_file(sys.argv[1]).print_csv(sys.argv[2])
 
 =========== UNIX Tools Command: CMSC
 
-cat cmsc.txt | grep '[a-zA-Z0-9]' | sed -e 's/^\([A-Za-z]*\)\( \|  \)\([0-9].*\)$/\1, \3/' -e 's/^Seats[^0-9]*\([0-9]*\)[^0-9]*\([0-9]*\)[^0-9]*\([0-9]*\).*/\1, \2, \3/' | awk '/^CMSC.*$/ {class = $1} /^[0][0-9].*$/ {print class", "$0} /^.*$/ {print $0}' | grep -v '^CMSC[0-9]*$\|^[0-9]*$' | awk '/^CMSC[0-9]*, [0-9]*$/ {print combined; combined = $0} !/^CMSC[0-9]*, [0-9]*$/ {combined = combined", "$0;} END {print combined}'
+cat cmsc.txt | grep '[a-zA-Z0-9]' | sed -e 's/^\([A-Za-z]*\)\( \|  \)\([0-9].*\)$/\1, \3/' -e 's/^Seats[^0-9]*\([0-9]*\)[^0-9]*\([0-9]*\)[^0-9]*\([0-9]*\).*/\1, \2, \3/' | awk '/^CMSC.*$/ {class = $1} /^[0][0-9].*$/ {print class", "$0} /^.*$/ {print $0}' | grep -v '^CMSC[0-9]*$\|^[0-9]*$' | awk 'BEGIN {printf "Course No., Section No., Instructor, Seats, Open, Waitlist, Days, Time, Bldg., Room No."} /^CMSC[0-9]*, [0-9]*$/ {print combined; combined = $0} !/^CMSC[0-9]*, [0-9]*$/ {combined = combined", "$0;} END {print combined}'
 
-
-OUTPUT SAMPLE:
-
-CMSC100, 0101, Charles Kassir, 45, 4, 0, M, 4:00pm - 4:50pm, CSI, 2117
-CMSC106, 0101, Jianwu Wang, 45, 0, 5, TuTh, 9:30am - 10:45am, CSI, 2117
-CMSC131, 0101, Evan Golub , 31, 0, 0, MWF, 2:00pm - 2:50pm, CSI, 1115
-CMSC131, 0102, Evan Golub , 31, 0, 0, MWF, 2:00pm - 2:50pm, CSI, 1115
-CMSC131, 0103, Evan Golub , 31, 1, 0, MWF, 2:00pm - 2:50pm, CSI, 1115
-CMSC131, 0104, Evan Golub , 31, 1, 0, MWF, 2:00pm - 2:50pm, CSI, 1115
-CMSC131, 0201, Evan Golub , 31, 1, 0, MWF, 3:00pm - 3:50pm, CSI, 1115
-
-... ETC
 
 =========== UNIX Tools Command: World Cup 1
 
+cat worldcup.txt | grep -v '!.*$\|^[|][0-9][0-9]*[|][|].*$\|^[|]}$\|^[|]-$' | sed -e 's/^.*{{fb|\([A-Z]*\)}}.*$/\1/' -e 's/^|align=center|{{sort dash}}$/|0/' | awk '/^[A-Z][A-Z][A-Z]$/ {cnum = NR; country = $0}
+    !/^[A-Z][A-Z][A-Z]$/ {
+        line = $0;
+        place = NR - cnum;
 
+        if($0 != "|0"){
+          while(match(line, /[0-9][0-9][0-9][0-9]]]/)){
+            print country", "substr(line, RSTART, RLENGTH-2)", "place
+            line = substr(line, RSTART+6)
+          }
+        }
+      }'
 
 
 =========== Python Script: CMSC
+
+
 
 
 =========== Python Script: World Cup 1
