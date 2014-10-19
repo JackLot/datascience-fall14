@@ -1,0 +1,1114 @@
+Lab 4 Submission
+
+=========== Data Wrangler Script: CMSC
+
+from wrangler import dw
+import sys
+
+if(len(sys.argv) < 3):
+	sys.exit('Error: Please include an input and output file.  Example python script.py input.csv output.csv')
+
+w = dw.DataWrangler()
+
+# Split data repeatedly on newline  into  rows
+w.add(dw.Split(column=["data"],
+               table=0,
+               status="active",
+               drop=True,
+               result="row",
+               update=False,
+               insert_position="right",
+               row=None,
+               on="\n",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max=0,
+               positions=None,
+               quote_character=None))
+
+# Extract from data on 'CMSC any number '
+w.add(dw.Extract(column=["data"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on="CMSC\\d+",
+                 before=None,
+                 after=None,
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Fill extract  with values from above
+w.add(dw.Fill(column=["extract"],
+              table=0,
+              status="active",
+              drop=False,
+              direction="down",
+              method="copy",
+              row=None))
+
+# Set  extract  name to  Course No.
+w.add(dw.SetName(column=["extract"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Course No."],
+                 header_row=None))
+
+# Set  data  name to  other
+w.add(dw.SetName(column=["data"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["other"],
+                 header_row=None))
+
+# Cut from other on 'CMSC any number '
+w.add(dw.Cut(column=["other"],
+             table=0,
+             status="active",
+             drop=False,
+             result="column",
+             update=True,
+             insert_position="right",
+             row=None,
+             on="CMSC\\d+",
+             before=None,
+             after=None,
+             ignore_between=None,
+             which=1,
+             max=1,
+             positions=None))
+
+# Delete  rows where other is null
+w.add(dw.Filter(column=[],
+                table=0,
+                status="active",
+                drop=False,
+                row=dw.Row(column=[],
+             table=0,
+             status="active",
+             drop=False,
+             conditions=[dw.IsNull(column=[],
+                table=0,
+                status="active",
+                drop=False,
+                lcol="other",
+                value=None,
+                op_str="is null")])))
+
+# Wrap  rows where other starts with '0'
+w.add(dw.Wrap(column=[],
+              table=0,
+              status="active",
+              drop=False,
+              row=dw.Row(column=[],
+             table=0,
+             status="active",
+             drop=False,
+             conditions=[dw.StartsWith(column=[],
+                    table=0,
+                    status="active",
+                    drop=False,
+                    lcol="other",
+                    value="0",
+                    op_str="starts with")])))
+
+# Drop wrap9, wrap7, wrap5, wrap3
+w.add(dw.Drop(column=["wrap9","wrap7","wrap5","wrap3"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Set  wrap  name to  Section No.
+w.add(dw.SetName(column=["wrap"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Section No."],
+                 header_row=None))
+
+# Set  wrap1  name to  Course No.
+w.add(dw.SetName(column=["wrap1"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Course No."],
+                 header_row=None))
+
+# Set  wrap2  name to  Instructor
+w.add(dw.SetName(column=["wrap2"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Instructor"],
+                 header_row=None))
+
+# Extract from wrap8 on 'CSI'
+w.add(dw.Extract(column=["wrap8"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on="CSI",
+                 before=None,
+                 after=None,
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from wrap8 between positions 5, 9
+w.add(dw.Extract(column=["wrap8"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=None,
+                 before=None,
+                 after=None,
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=[5,9]))
+
+# Drop wrap8
+w.add(dw.Drop(column=["wrap8"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Set  extract  name to  Bldg.
+w.add(dw.SetName(column=["extract"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Bldg."],
+                 header_row=None))
+
+# Set  extract1  name to  Room No.
+w.add(dw.SetName(column=["extract1"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Room No."],
+                 header_row=None))
+
+# Extract from wrap6 before ' '
+w.add(dw.Extract(column=["wrap6"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before=" ",
+                 after=None,
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Cut from wrap6 before ' '
+w.add(dw.Cut(column=["wrap6"],
+             table=0,
+             status="active",
+             drop=False,
+             result="column",
+             update=True,
+             insert_position="right",
+             row=None,
+             on=".*",
+             before=" ",
+             after=None,
+             ignore_between=None,
+             which=1,
+             max=1,
+             positions=None))
+
+# Set  extract  name to  Days
+w.add(dw.SetName(column=["extract"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Days"],
+                 header_row=None))
+
+# Set  wrap6  name to  Time
+w.add(dw.SetName(column=["wrap6"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Time"],
+                 header_row=None))
+
+# Cut from wrap4 before '('
+w.add(dw.Cut(column=["wrap4"],
+             table=0,
+             status="active",
+             drop=False,
+             result="column",
+             update=True,
+             insert_position="right",
+             row=None,
+             on=".*",
+             before="\\(",
+             after=None,
+             ignore_between=None,
+             which=1,
+             max=1,
+             positions=None))
+
+# Extract from wrap4 between '(' and ')'
+w.add(dw.Extract(column=["wrap4"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="\\)",
+                 after="\\(",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Drop wrap4
+w.add(dw.Drop(column=["wrap4"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Extract from extract between ' ' and ','
+w.add(dw.Extract(column=["extract"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before=",",
+                 after=" ",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Set  extract2  name to  Total
+w.add(dw.SetName(column=["extract2"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Total"],
+                 header_row=None))
+
+# Extract from extract between 'Open: ' and ','
+w.add(dw.Extract(column=["extract"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before=",",
+                 after="Open: ",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Set  extract3  name to  Open
+w.add(dw.SetName(column=["extract3"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Open"],
+                 header_row=None))
+
+# Extract from extract after 'Waitlist: '
+w.add(dw.Extract(column=["extract"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before=None,
+                 after="Waitlist: ",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Set  extract4  name to  Waitlist
+w.add(dw.SetName(column=["extract4"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Waitlist"],
+                 header_row=None))
+
+# Drop extract
+w.add(dw.Drop(column=["extract"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Set  Total  name to  Seats
+w.add(dw.SetName(column=["Total"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Seats"],
+                 header_row=None))
+
+w.apply_to_file(sys.argv[1]).print_csv(sys.argv[2])
+
+
+=========== Data Wrangler Script: World Cup 1
+
+from wrangler import dw
+import sys
+
+if(len(sys.argv) < 3):
+	sys.exit('Error: Please include an input and output file.  Example python script.py input.csv output.csv')
+
+w = dw.DataWrangler()
+
+# Split data repeatedly on newline  into  rows
+w.add(dw.Split(column=["data"],
+               table=0,
+               status="active",
+               drop=True,
+               result="row",
+               update=False,
+               insert_position="right",
+               row=None,
+               on="\n",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max=0,
+               positions=None,
+               quote_character=None))
+
+# Delete row 1
+w.add(dw.Filter(column=[],
+                table=0,
+                status="active",
+                drop=False,
+                row=dw.Row(column=[],
+             table=0,
+             status="active",
+             drop=False,
+             conditions=[dw.RowIndex(column=[],
+                  table=0,
+                  status="active",
+                  drop=False,
+                  indices=[0])])))
+
+# Wrap  rows where data starts with '|-'
+w.add(dw.Wrap(column=[],
+              table=0,
+              status="active",
+              drop=False,
+              row=dw.Row(column=[],
+             table=0,
+             status="active",
+             drop=False,
+             conditions=[dw.StartsWith(column=[],
+                    table=0,
+                    status="active",
+                    drop=False,
+                    lcol="data",
+                    value="|-",
+                    op_str="starts with")])))
+
+# Drop wrap, wrap7, wrap6
+w.add(dw.Drop(column=["wrap","wrap7","wrap6"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Split wrap2 repeatedly on ','
+w.add(dw.Split(column=["wrap2"],
+               table=0,
+               status="active",
+               drop=True,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               on=",",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max="0",
+               positions=None,
+               quote_character=None))
+
+# Extract from split between 'Cup|' and ']'
+w.add(dw.Extract(column=["split"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="Cup\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split1 between '|' and ']'
+w.add(dw.Extract(column=["split1"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split2 between '|' and ']'
+w.add(dw.Extract(column=["split2"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split3 between '|' and ']'
+w.add(dw.Extract(column=["split3"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split4 between '|' and ']'
+w.add(dw.Extract(column=["split4"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Drop split4, split3, split2, split1...
+w.add(dw.Drop(column=["split4","split3","split2","split1","split"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Merge extract, extract1, extract2, extract3...  with glue  ,
+w.add(dw.Merge(column=["extract","extract1","extract2","extract3","extract4"],
+               table=0,
+               status="active",
+               drop=False,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               glue=","))
+
+# Drop extract, extract1, extract2, extract3...
+w.add(dw.Drop(column=["extract","extract1","extract2","extract3","extract4"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Extract from wrap1 between 'fb|' and '}}'
+w.add(dw.Extract(column=["wrap1"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="}}",
+                 after="fb\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Drop wrap1
+w.add(dw.Drop(column=["wrap1"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Split wrap3 repeatedly on ','
+w.add(dw.Split(column=["wrap3"],
+               table=0,
+               status="active",
+               drop=True,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               on=",",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max="0",
+               positions=None,
+               quote_character=None))
+
+# Extract from split between 'Cup|' and ']'
+w.add(dw.Extract(column=["split"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="Cup\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split5 between 'Cup|' and ']'
+w.add(dw.Extract(column=["split5"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="Cup\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split6 between '|' and ']]'
+w.add(dw.Extract(column=["split6"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split7 between '|' and ']]'
+w.add(dw.Extract(column=["split7"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Drop split7, split6, split5, split
+w.add(dw.Drop(column=["split7","split6","split5","split"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Merge extract5, extract6, extract7, extract8  with glue  ,
+w.add(dw.Merge(column=["extract5","extract6","extract7","extract8"],
+               table=0,
+               status="active",
+               drop=False,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               glue=","))
+
+# Drop extract5, extract6, extract7, extract8
+w.add(dw.Drop(column=["extract5","extract6","extract7","extract8"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Split wrap4 repeatedly on ','
+w.add(dw.Split(column=["wrap4"],
+               table=0,
+               status="active",
+               drop=True,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               on=",",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max="0",
+               positions=None,
+               quote_character=None))
+
+# Extract from split between 'Cup|' and ']'
+w.add(dw.Extract(column=["split"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="Cup\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split8 between '|' and ']'
+w.add(dw.Extract(column=["split8"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split9 between '|' and ']'
+w.add(dw.Extract(column=["split9"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split10 between '|' and ']'
+w.add(dw.Extract(column=["split10"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Drop split, split8, split9, split10
+w.add(dw.Drop(column=["split","split8","split9","split10"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Merge extract9, extract10, extract11, extract12  with glue  ,
+w.add(dw.Merge(column=["extract9","extract10","extract11","extract12"],
+               table=0,
+               status="active",
+               drop=False,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               glue=","))
+
+# Drop extract9, extract10, extract11, extract12
+w.add(dw.Drop(column=["extract9","extract10","extract11","extract12"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Split wrap5 repeatedly on ','
+w.add(dw.Split(column=["wrap5"],
+               table=0,
+               status="active",
+               drop=True,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               on=",",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max="0",
+               positions=None,
+               quote_character=None))
+
+# Extract from split between 'Cup|' and ']'
+w.add(dw.Extract(column=["split"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="Cup\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split11 between '|' and ']'
+w.add(dw.Extract(column=["split11"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Extract from split12 between '|' and ']]'
+w.add(dw.Extract(column=["split12"],
+                 table=0,
+                 status="active",
+                 drop=False,
+                 result="column",
+                 update=False,
+                 insert_position="right",
+                 row=None,
+                 on=".*",
+                 before="]]",
+                 after="\\|",
+                 ignore_between=None,
+                 which=1,
+                 max=1,
+                 positions=None))
+
+# Drop split, split11, split12
+w.add(dw.Drop(column=["split","split11","split12"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Merge extract13, extract14, extract15  with glue  ,
+w.add(dw.Merge(column=["extract13","extract14","extract15"],
+               table=0,
+               status="active",
+               drop=False,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               glue=","))
+
+# Drop extract13, extract14, extract15
+w.add(dw.Drop(column=["extract13","extract14","extract15"],
+              table=0,
+              status="active",
+              drop=True))
+
+# Set  extract  name to  Country
+w.add(dw.SetName(column=["extract"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Country"],
+                 header_row=None))
+
+# Set  merge  name to  1
+w.add(dw.SetName(column=["merge"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["1"],
+                 header_row=None))
+
+# Set  merge1  name to  2
+w.add(dw.SetName(column=["merge1"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["2"],
+                 header_row=None))
+
+# Set  merge2  name to  3
+w.add(dw.SetName(column=["merge2"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["3"],
+                 header_row=None))
+
+# Set  merge3  name to  4
+w.add(dw.SetName(column=["merge3"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["4"],
+                 header_row=None))
+
+# Fold 1, 2, 3, 4  using  header as a key
+w.add(dw.Fold(column=["_1","_2","_3","_4"],
+              table=0,
+              status="active",
+              drop=False,
+              keys=[-1]))
+
+# Split value repeatedly on ','  into  rows
+w.add(dw.Split(column=["value"],
+               table=0,
+               status="active",
+               drop=True,
+               result="row",
+               update=False,
+               insert_position="right",
+               row=None,
+               on=",",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max="0",
+               positions=None,
+               quote_character=None))
+
+w.apply_to_file(sys.argv[1]).print_csv(sys.argv[2])
+
+
+=========== Data Wrangler Script: World Cup 2
+
+from wrangler import dw
+import sys
+
+if(len(sys.argv) < 3):
+	sys.exit('Error: Please include an input and output file.  Example python script.py input.csv output.csv')
+
+w = dw.DataWrangler()
+
+# Split data repeatedly on newline  into  rows
+w.add(dw.Split(column=["data"],
+               table=0,
+               status="active",
+               drop=True,
+               result="row",
+               update=False,
+               insert_position="right",
+               row=None,
+               on="\n",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max=0,
+               positions=None,
+               quote_character=None))
+
+# Split data repeatedly on ','
+w.add(dw.Split(column=["data"],
+               table=0,
+               status="active",
+               drop=True,
+               result="column",
+               update=False,
+               insert_position="right",
+               row=None,
+               on=",",
+               before=None,
+               after=None,
+               ignore_between=None,
+               which=1,
+               max=0,
+               positions=None,
+               quote_character=None))
+
+# Delete row 1
+w.add(dw.Filter(column=[],
+                table=0,
+                status="active",
+                drop=False,
+                row=dw.Row(column=[],
+             table=0,
+             status="active",
+             drop=False,
+             conditions=[dw.RowIndex(column=[],
+                  table=0,
+                  status="active",
+                  drop=False,
+                  indices=[0])])))
+
+# Unfold split2  on  split1
+w.add(dw.Unfold(column=["split2"],
+                table=0,
+                status="active",
+                drop=False,
+                measure="split1"))
+
+# Delete row 25
+w.add(dw.Filter(column=[],
+                table=0,
+                status="active",
+                drop=False,
+                row=dw.Row(column=[],
+             table=0,
+             status="active",
+             drop=False,
+             conditions=[dw.RowIndex(column=[],
+                  table=0,
+                  status="active",
+                  drop=False,
+                  indices=[24])])))
+
+# Set  split  name to  Country
+w.add(dw.SetName(column=["split"],
+                 table=0,
+                 status="active",
+                 drop=True,
+                 names=["Country"],
+                 header_row=None))
+
+# Drop 
+w.add(dw.Drop(column=["_"],
+              table=0,
+              status="active",
+              drop=True))
+
+w.apply_to_file(sys.argv[1]).print_csv(sys.argv[2])
+
+
+=========== UNIX Tools Command: CMSC
+
+cat cmsc.txt | grep '[a-zA-Z0-9]' | sed -e 's/^\([A-Za-z]*\)\( \|  \)\([0-9].*\)$/\1, \3/' -e 's/^Seats[^0-9]*\([0-9]*\)[^0-9]*\([0-9]*\)[^0-9]*\([0-9]*\).*/\1, \2, \3/' | awk '/^CMSC.*$/ {class = $1} /^[0][0-9].*$/ {print class", "$0} /^.*$/ {print $0}' | grep -v '^CMSC[0-9]*$\|^[0-9]*$' | awk '/^CMSC[0-9]*, [0-9]*$/ {print combined; combined = $0} !/^CMSC[0-9]*, [0-9]*$/ {combined = combined", "$0;} END {print combined}'
+
+
+OUTPUT SAMPLE:
+
+CMSC100, 0101, Charles Kassir, 45, 4, 0, M, 4:00pm - 4:50pm, CSI, 2117
+CMSC106, 0101, Jianwu Wang, 45, 0, 5, TuTh, 9:30am - 10:45am, CSI, 2117
+CMSC131, 0101, Evan Golub , 31, 0, 0, MWF, 2:00pm - 2:50pm, CSI, 1115
+CMSC131, 0102, Evan Golub , 31, 0, 0, MWF, 2:00pm - 2:50pm, CSI, 1115
+CMSC131, 0103, Evan Golub , 31, 1, 0, MWF, 2:00pm - 2:50pm, CSI, 1115
+CMSC131, 0104, Evan Golub , 31, 1, 0, MWF, 2:00pm - 2:50pm, CSI, 1115
+CMSC131, 0201, Evan Golub , 31, 1, 0, MWF, 3:00pm - 3:50pm, CSI, 1115
+
+... ETC
+
+=========== UNIX Tools Command: World Cup 1
+
+
+
+
+=========== Python Script: CMSC
+
+
+=========== Python Script: World Cup 1
+
+
+=========== Python Script: World Cup 2
+
