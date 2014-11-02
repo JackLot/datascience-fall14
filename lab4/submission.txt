@@ -2,6 +2,7 @@ Lab 4 Submission
 
 =========== Data Wrangler Script: CMSC
 
+<<<<<<< HEAD
 from wrangler import dw
 import sys
 
@@ -1207,3 +1208,27 @@ worldcupPivoted = worldcup.pivot(index='country', columns='year', values='place'
 print worldcupPivoted
 
 OUTPUT: Results of calling this script were output and redirected into the file python_worldcup_2_result.txt
+=======
+
+=========== Data Wrangler Script: World Cup 1
+
+
+=========== Data Wrangler Script: World Cup 2
+
+
+=========== UNIX Tools Command: CMSC
+
+
+=========== UNIX Tools Command: World Cup 1
+
+
+=========== Python Script: CMSC
+
+
+=========== Python Script: World Cup 1
+
+
+=========== Python Script: World Cup 2
+
+
+>>>>>>> 7abdb5aa2be2cfd8d8191554822b119c35df9f0f

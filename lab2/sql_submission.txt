@@ -1,6 +1,7 @@
 SQL Assignment Submission
 
 === 1
+
 SELECT player_id, result FROM results WHERE event_id = 'E28';
 **************** RESULT ***************************************************************
 player_id  | result 
@@ -241,4 +242,3 @@ SELECT countries.name, coalesce(has1975.count,0) AS count FROM countries LEFT OU
 There were more tuples but I didn't include them: the rest are just countries with 0 1975 birthdays
 
 (58 rows) in total
-=============================================================================================
