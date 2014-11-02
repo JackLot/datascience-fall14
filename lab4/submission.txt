@@ -1087,6 +1087,9 @@ w.apply_to_file(sys.argv[1]).print_csv(sys.argv[2])
 cat cmsc.txt | grep '[a-zA-Z0-9]' | sed -e 's/^\([A-Za-z]*\)\( \|  \)\([0-9].*\)$/\1, \3/' -e 's/^Seats[^0-9]*\([0-9]*\)[^0-9]*\([0-9]*\)[^0-9]*\([0-9]*\).*/\1, \2, \3/' | awk '/^CMSC.*$/ {class = $1} /^[0][0-9].*$/ {print class", "$0} /^.*$/ {print $0}' | grep -v '^CMSC[0-9]*$\|^[0-9]*$' | awk 'BEGIN {printf "Course No., Section No., Instructor, Seats, Open, Waitlist, Days, Time, Bldg., Room No."} /^CMSC[0-9]*, [0-9]*$/ {print combined; combined = $0} !/^CMSC[0-9]*, [0-9]*$/ {combined = combined", "$0;} END {print combined}'
 
 
+OUTPUT: Results of calling this terminal command were output and redirected into the file terminal_cmsc_result.txt
+
+
 =========== UNIX Tools Command: World Cup 1
 
 cat worldcup.txt | grep -v '!.*$\|^[|][0-9][0-9]*[|][|].*$\|^[|]}$\|^[|]-$' | sed -e 's/^.*{{fb|\([A-Z]*\)}}.*$/\1/' -e 's/^|align=center|{{sort dash}}$/|0/' | awk '/^[A-Z][A-Z][A-Z]$/ {cnum = NR; country = $0}
@@ -1103,13 +1106,104 @@ cat worldcup.txt | grep -v '!.*$\|^[|][0-9][0-9]*[|][|].*$\|^[|]}$\|^[|]-$' | se
       }'
 
 
+OUTPUT: Results of calling this terminal command were output and redirected into the file terminal_worldcup_1_result.txt
+
+
 =========== Python Script: CMSC
 
+#!/usr/bin/python
+import re
 
+# Function definitions
+def checkmatch(string, regex):
+  return re.compile(regex).match(string)
+
+def parseseats(string):
+  matches = re.compile("\d+").findall(string)
+  return matches[0] + ", " + matches[1] + ", " + matches[2]
+
+def parsetime(string):
+  matches = re.compile("[ ]*([A-Za-z]+)[ ]+(.+)").search(string).groups()
+  return matches[0] + ", " + matches[1]
+
+def parselocation(string):
+  matches = re.compile("[ ]*([A-Z]{3})[ ]+([0-9]+)").search(string).groups()
+  return matches[0] + ", " + matches[1]
+
+# Parsing code
+f = open('cmsc.txt', 'r')
+classname = ""
+
+for line in f:
+  if checkmatch(line, "CMSC[0-9]{3}"):
+    classname = line.rstrip()
+  elif checkmatch(line, "0[0-9]{3}"):
+    print("\n"),
+    print(classname.rstrip() + ", " + line.rstrip()),
+  elif checkmatch(line, "Seats.*"):
+    print(", " + parseseats(line)),
+  elif checkmatch(line, "[A-Z]{3}[ ]+[0-9]+"):
+    print(", " + parselocation(line)),
+  elif checkmatch(line, "(M|Tu|W|Th|F)+[ ]+.*"):
+    print(", " + parsetime(line)),
+  else:
+    if line.strip():
+      print(", " + line.rstrip()),
+
+
+OUTPUT: Results of calling this script were output and redirected into the file python_cmsc_result.txt
 
 
 =========== Python Script: World Cup 1
 
+#!/usr/bin/python
+import re
+
+# Function definitions
+def ignoreline(line):
+  return re.compile("!.*$|^[|][0-9][0-9]*[|][|].*$|^[|]}$|^[|]-$").match(line)
+
+def checkmatch(string, regex):
+  return re.compile(regex).match(string)
+
+def getregex(string):
+  return re.compile(string)
+
+# Parsing code
+f = open('worldcup.txt', 'r')
+
+countryregex = ".*fb[|]([A-Z]{3})"
+nomedalregex = "^[|]align=center[|]{{sort dash}}$"
+country = ""
+countryindex = 0
+i = 1
+
+for line in f:
+  if not ignoreline(line):
+    if checkmatch(line, countryregex):
+      country = getregex(countryregex).findall(line)[0]
+      countryindex = i
+    else:
+      if not checkmatch(line, nomedalregex):
+        place = i - countryindex
+        years = re.compile("([0-9]{4})]]")
+        allyears = years.findall(line)
+        for y in allyears:
+          print country + ", " + y + ", " + str(place)
+    i = i + 1
+
+
+OUTPUT: Results of calling this script were output and redirected into the file python_worldcup_1_result.txt
+
 
 =========== Python Script: World Cup 2
 
+#!/usr/bin/python
+import pandas as pd
+
+worldcup = pd.read_csv('worldcup.csv')
+worldcupPivoted = worldcup.pivot(index='country', columns='year', values='place')
+
+print worldcupPivoted
+
+OUTPUT: Results of calling this script were output and redirected into the file python_worldcup_2_result.txt

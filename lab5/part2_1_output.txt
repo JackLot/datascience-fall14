@@ -1,0 +1,519 @@
+Processing article10_Russia.txt...
+  Russian, GPE
+  MOSCOW, GPE
+  Xinhua, ORGANIZATION
+  Moscow, GPE
+  Russia, GPE
+  Ukraine, GPE
+  European Union, ORGANIZATION
+  Brussels, GPE
+  Energy Ministry, ORGANIZATION
+  Russian, GPE
+  Ukraine, PERSON
+  U.S., GPE
+  Brussels, GPE
+  Ukraine, GPE
+  Alexander Novak, PERSON
+  Cabinet, ORGANIZATION
+  Brussels, GPE
+  Brussels, GPE
+  Novak, PERSON
+  Russian, GPE
+  Ukraine, GPE
+  Ukrainian, GPE
+  RIA Novosti, ORGANIZATION
+  Novak, PERSON
+  Dmitry Medvedev, PERSON
+  Ukraine, GPE
+  Europe, GPE
+  Ukraine, PERSON
+  European Union, ORGANIZATION
+  Kiev, GPE
+  Russia, GPE
+  Russian, GPE
+  Ukraine, GPE
+  Russia, GPE
+  Russia, GPE
+  Ukraine, GPE
+Processing article6_president.txt...
+  Burkina, GPE
+  Faso, ORGANIZATION
+  BRAHIMA, ORGANIZATION
+  Associated, ORGANIZATION
+  Burkina Faso, PERSON
+  AP, ORGANIZATION
+  Burkina Faso, GPE
+  Blaise Compaore, PERSON
+  Compaore, ORGANIZATION
+  Army, ORGANIZATION
+  Honore Traore, PERSON
+  Bobo Dioulasso, PERSON
+  Flames, PERSON
+  Ablasse Ouedraogo, PERSON
+  Ouagadougou, GPE
+  United, GPE
+  Nations, ORGANIZATION
+  Ban, ORGANIZATION
+  Mohamed, PERSON
+  Ibn, ORGANIZATION
+  U.N., ORGANIZATION
+  Mossi, GPE
+  Jonathan Yameogo, PERSON
+  Burkina, GPE
+  Faso, ORGANIZATION
+  West Africa, LOCATION
+  Compaore, ORGANIZATION
+  Thomas Sankara, PERSON
+  Compaore, ORGANIZATION
+  Compaore, GPE
+  Compaore, ORGANIZATION
+  Charles Taylor, PERSON
+  Liberian, GPE
+  Sierra Leone, GPE
+  Burkina Faso, GPE
+  Ivory, GPE
+  Angola, GPE
+  Ivory, GPE
+  European, GPE
+  Mali, LOCATION
+  Mali, PERSON
+  Tuareg, PERSON
+  Compaore, ORGANIZATION
+  Compaore, ORGANIZATION
+  Ouagadougou, GPE
+  Associated, ORGANIZATION
+  Krista Larson, PERSON
+  Paris, GPE
+Processing article1_ebolaBikeride.txt...
+  US, GSP
+  Ebola, PERSON
+  IST, ORGANIZATION
+  Obama, PERSON
+  Maine, GPE
+  Steve Holland, PERSON
+  Maine, PERSON
+  Reuters, ORGANIZATION
+  Ebola, GPE
+  Sierra, GPE
+  Maine, PERSON
+  Governor Paul, PERSON
+  Kaci Hickox, PERSON
+  LePage, GPE
+  Hickox, PERSON
+  Hickox, PERSON
+  Fort Kent, ORGANIZATION
+  Canadian, GPE
+  Ted Wilbur, PERSON
+  Hickox, GPE
+  New England, ORGANIZATION
+  Hickox, PERSON
+  LePage, GPE
+  LePage, ORGANIZATION
+  Republican, ORGANIZATION
+  Barack Obama, PERSON
+  Hickox, PERSON
+  Maine, GPE
+  Cape, GPE
+  Democratic, ORGANIZATION
+  Mike Michaud, PERSON
+  LePage, ORGANIZATION
+  Hickox, PERSON
+  White House, FACILITY
+  Josh Earnest, PERSON
+  Air, FACILITY
+  Maine, PERSON
+  U.S., GPE
+  Disease Control, PERSON
+  Earnest, PERSON
+  Obama, PERSON
+  Hickox, PERSON
+  Maine, GPE
+  Cape, GPE
+  Elizabeth, PERSON
+  Hickox, GPE
+  Norman Siegel, PERSON
+  Siegel, PERSON
+  Medical, GPE
+  Ebola, PERSON
+  Ebola, GPE
+  U.S., GPE
+  New York, GPE
+  Craig Spencer, PERSON
+  West Africa, LOCATION
+  Spencer, GPE
+  New York, GPE
+  Bellevue Hospital, ORGANIZATION
+  Hickox, PERSON
+  Maine, GPE
+  Ebola, PERSON
+  Hickox, PERSON
+  Ebola, PERSON
+  Borders, GPE
+  Sierra Leone, GPE
+  New, GPE
+  Jersey Governor Chris Christie, PERSON
+  Newark, GPE
+  Maine, GPE
+  U.S., GPE
+  Congress, ORGANIZATION
+  Obama, GPE
+  Ebola, GPE
+  U.S., GPE
+  Ebola, GPE
+  Liberia, GPE
+  Sierra Leone, PERSON
+  Guinea, GPE
+  Obama, GPE
+  American, GPE
+  New York City, GPE
+  West Africa, LOCATION
+  New York, GPE
+  Andrew Cuomo, PERSON
+  New York City, GPE
+  Bill, PERSON
+  Blasio, PERSON
+  Additional, ORGANIZATION
+  Joseph Ax, PERSON
+  Scott Malone, PERSON
+  Jeff Mason, PERSON
+  Brendan O'Brien, PERSON
+  Ellen Wulfhorst, PERSON
+  Susan Heavey, PERSON
+  Roberta Rampton, PERSON
+  Will Dunham, PERSON
+  Jonathan Oatis, PERSON
+  Grant McCool, PERSON
+Processing article8_lebron.txt...
+  LeBron James, ORGANIZATION
+  Nancy Armour, PERSON
+  USA, ORGANIZATION
+  LeBron James, ORGANIZATION
+  Nike, PERSON
+  Cleveland, GPE
+  NBA, ORGANIZATION
+  James, PERSON
+  James, PERSON
+  USA, ORGANIZATION
+  Jeff Zillgitt, PERSON
+  James, PERSON
+  Ohio, PERSON
+  Akron, PERSON
+  Cleveland, GPE
+  James, PERSON
+  USA, ORGANIZATION
+  Lebron James, PERSON
+  James, PERSON
+  James, PERSON
+  Miami, GPE
+  LeBron, ORGANIZATION
+  James Family, PERSON
+  James, PERSON
+  LeBron, GPE
+  St., GPE
+  Boys, ORGANIZATION
+  Girls Clubs, PERSON
+  Akron, GPE
+  Cleveland, GPE
+  James, PERSON
+  Cleveland, GPE
+  James, PERSON
+  Northeast Ohio, PERSON
+  James, PERSON
+  Illustrated, GPE
+  Miami, GPE
+  Cleveland, GPE
+Processing article2_planeCrash.txt...
+  Small, GPE
+  Kansas, GPE
+  Published, PERSON
+  Kansas, GPE
+  Wichita, ORGANIZATION
+  Wichita Fire, PERSON
+  Ronald Blackwell, PERSON
+  Blackwell, PERSON
+  Wichita, PERSON
+  Fire Marshal Brad Crisp, ORGANIZATION
+  Crisp, PERSON
+  Via Christi Hospital St. Francis, ORGANIZATION
+  Roz Hutchinson, PERSON
+  Oklahoma, GPE
+  FBI, ORGANIZATION
+  Bridget Patton, PERSON
+  FBI, ORGANIZATION
+  Tony Molinaro, PERSON
+  Beechcraft, ORGANIZATION
+  FlightSafety, ORGANIZATION
+  Cessna, GPE
+  Blackwell, PERSON
+  Ryan, PERSON
+  Weatherby, PERSON
+  Yingling Aviation, ORGANIZATION
+  Jay, PERSON
+  Boyle, GPE
+  Wichita, GPE
+  Airport, ORGANIZATION
+  American, GPE
+  Southwest, GPE
+  Delta, PERSON
+  United, GPE
+  Allegiant, ORGANIZATION
+  U.S., GPE
+  Transportation, ORGANIZATION
+  Wichita, PERSON
+  Joshua Rhett Miller, PERSON
+  Associated, ORGANIZATION
+Processing article3_worldSeries.txt...
+  San, GPE
+  Francisco Giants, ORGANIZATION
+  Associated, ORGANIZATION
+  KANSAS, ORGANIZATION
+  Mo, GPE
+  AP, ORGANIZATION
+  Madison Bumgarner, PERSON
+  San Francisco Giants, ORGANIZATION
+  Kansas City, ORGANIZATION
+  Gregor Blanco, PERSON
+  Alex Gordon, PERSON
+  Bumgarner, PERSON
+  Salvador Perez, PERSON
+  Pablo Sandoval, PERSON
+  Giants, ORGANIZATION
+  Series, GPE
+  San, GPE
+  Francisco, PERSON
+  Bumgarner, PERSON
+  Omar Infante, PERSON
+Processing article4_starbucks.txt...
+  Shares Tumble, PERSON
+  Sales Lag Lauren Gensler Forbes, PERSON
+  Wall Street, FACILITY
+  Street, PERSON
+  CEO Howard Schultz, ORGANIZATION
+  Teavana, PERSON
+  La Boulange, PERSON
+  Pumpkin Spice Latte, PERSON
+  Starbucks Japan, PERSON
+Processing article5_hacking.txt...
+  PirateBay Gottfrid Svartholm Found Guilty, ORGANIZATION
+  Evan Roberts, PERSON
+  Swedish, GPE
+  Pirate Bay, ORGANIZATION
+  Denmark, GPE
+  Pirate Bay, ORGANIZATION
+  Company, ORGANIZATION
+  Denmark, GPE
+  Mr., PERSON
+  Gottfrid, ORGANIZATION
+  US, GPE
+  CSC, ORGANIZATION
+  Pirate Bay Gottfrid Svartholm Found Guilty, ORGANIZATION
+  CSC, ORGANIZATION
+  Gottfrid, PERSON
+  Gottfrid, PERSON
+  CSC, ORGANIZATION
+  Gottfrid, PERSON
+  Jacob Appelbaum, PERSON
+  Gottfrid, GPE
+  Swedish, GPE
+  Gottfrid, PERSON
+  Luise Hoj, PERSON
+  Denmark, PERSON
+  TV2, ORGANIZATION
+  Hoj, PERSON
+  Frederiksberg, GPE
+  Ulla Otken, PERSON
+  CSC, ORGANIZATION
+Processing article7_BaltimoreMarathon.txt...
+  Baltimore, GPE
+  Paul Pierre-Louis, PERSON
+  The Baltimore Sun, ORGANIZATION
+  Brian Rosenberg, PERSON
+  Baltimore Marathon, ORGANIZATION
+  Camden Yards, PERSON
+  Rosenberg, PERSON
+  Rosenberg, PERSON
+  Mechanicsburg, GPE
+  Baltimore Marathon, ORGANIZATION
+  Alex, PERSON
+  Wang, GPE
+  University, ORGANIZATION
+  Maryland, GPE
+  Ellicott City, PERSON
+  Rosenberg, PERSON
+  Dave Berdan, PERSON
+  Owings Mills, ORGANIZATION
+  Berdan, PERSON
+  Berdan, GPE
+  U.S., GPE
+  Berdan, PERSON
+  Rosenberg, PERSON
+  Berdan, PERSON
+  Berdan, PERSON
+  Wang, PERSON
+  Baltimore Marathon, ORGANIZATION
+  Wang, PERSON
+  Armour, PERSON
+  Catherine E. Pugh, PERSON
+  Baltimore Marathon, ORGANIZATION
+  Pugh, PERSON
+  Berdan, PERSON
+  Inner Harbor, ORGANIZATION
+  Got, GPE
+  Berdan, PERSON
+  Baltimore, ORGANIZATION
+  Nick Arciniaga, PERSON
+  Flagstaff, GPE
+  Julia, GPE
+  Columbia, GPE
+  Kennedy, PERSON
+  Kithuka, ORGANIZATION
+  Megan, PERSON
+  DiGregorio, ORGANIZATION
+  Baltimore, GPE
+  Baltimore, LOCATION
+  Eutaw Street, FACILITY
+  Nick, PERSON
+  Bremer, GPE
+  Annapolis, PERSON
+  Greg Mihaly, PERSON
+  Middle River, GPE
+  Annapolis, GPE
+  Virginia Beach, PERSON
+  Washington, GPE
+  Baltimore Marathon, ORGANIZATION
+  Camden Yards, PERSON
+  T Bank Stadium, PERSON
+  Bremer, PERSON
+  Mihaly, PERSON
+  Mihaly, PERSON
+  Orioles, GPE
+  Baltimore, GPE
+  Rosenberg, PERSON
+  Camden Yards, PERSON
+  Rosenberg, PERSON
+Processing article9_menino.txt...
+  Fond, GPE
+  Menino, GPE
+  Boston, GPE
+  Eric Moskowitz, PERSON
+  Maria Sacchetti, PERSON
+  Peter Schworm, PERSON
+  Meghan E. Irons Boston City Councilor Sal LaMattina, PERSON
+  City Hall, ORGANIZATION
+  Nicole Leo, PERSON
+  City Council, ORGANIZATION
+  Bill Linehan, PERSON
+  SUZANNE, ORGANIZATION
+  Boston City Councilor Sal LaMattina, PERSON
+  City Hall, ORGANIZATION
+  Nicole Leo, PERSON
+  City Council, ORGANIZATION
+  Bill Linehan, PERSON
+  Boston, GPE
+  City Hall, FACILITY
+  Boston, GPE
+  Thomas M. Menino, PERSON
+  Judy, PERSON
+  Pais, GPE
+  Meninos, ORGANIZATION
+  Hyde Park, ORGANIZATION
+  Chesterfield Street, FACILITY
+  Pais, PERSON
+  Meninos, ORGANIZATION
+  Menino, PERSON
+  Pais, PERSON
+  Marion Barone, PERSON
+  Menino, PERSON
+  East Boston, GPE
+  Menino, GPE
+  Alvaro Laundrymat, ORGANIZATION
+  Summer Street, ORGANIZATION
+  Alvaro Garcia, PERSON
+  Menino, PERSON
+  Garcia, GPE
+  Colombia, GPE
+  Menino, PERSON
+  Garcia, PERSON
+  Menino, PERSON
+  Spanish, GPE
+  Italian, GPE
+  Latino, GPE
+  Garcia, PERSON
+  Garcia, PERSON
+  Spanish, GPE
+  East, GPE
+  Boston, ORGANIZATION
+  Children, GPE
+  Thomas M. Menino Community Room, PERSON
+  Maverick, GPE
+  LoPresti Park, ORGANIZATION
+  Mario Umana Academy, ORGANIZATION
+  Sunshine, PERSON
+  Lo Presti Park, PERSON
+  Menino, PERSON
+  Boston Harbor, GPE
+  Zakim Bridge, PERSON
+  Michael Crowley, PERSON
+  Umana, GPE
+  Boston, GPE
+  Santarpio, ORGANIZATION
+  Pizza, PERSON
+  Menino, GPE
+  Tommy, PERSON
+  Tony Costanza, PERSON
+  Costanza, PERSON
+  Menino, PERSON
+  Menino, PERSON
+  Costanza, PERSON
+  Menino, PERSON
+  Costanza, PERSON
+  Menino, PERSON
+  Frank Sinatra, PERSON
+  Costanza, PERSON
+  City Hall, FACILITY
+  Rocco, PERSON
+  Addessa, ORGANIZATION
+  Menino, PERSON
+  Menino, PERSON
+  Addessa, PERSON
+  Addessa, PERSON
+  City Hall, FACILITY
+  Menino, PERSON
+  Addessa, PERSON
+  Menino, GPE
+  East Boston, GPE
+  Boston, GPE
+  Laura Cawley, PERSON
+  Cawley, GPE
+  Patty, PERSON
+  McKinnon, ORGANIZATION
+  Cohasset, GPE
+  Boston, GPE
+  Menino, PERSON
+  Many, PERSON
+  Menino, PERSON
+  Menino, PERSON
+  Stephen McCloud, PERSON
+  Menino, PERSON
+  McCloud, PERSON
+  Back, GPE
+  Menino, PERSON
+  Hyde Park, GPE
+  Angela, GPE
+  Ford Taurus, ORGANIZATION
+  Angela Menino, PERSON
+  Louisville, ORGANIZATION
+  Bob Rand, PERSON
+  Menino, GPE
+  Riley, PERSON
+  Rand, GPE
+  Menino French, PERSON
+  Dedham Diner, PERSON
+  Menino, PERSON
+  Menino, ORGANIZATION
+  Kiley, PERSON
+  Rand, GPE
+  Meninos, ORGANIZATION
+  Back, GPE
+  Rand, GPE
+  Chesterfield, GPE

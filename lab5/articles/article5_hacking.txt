@@ -1,0 +1,22 @@
+Founder of PirateBay Gottfrid Svartholm Found Guilty In Hacking Trial
+By Evan Roberts	/ October 30, 2014 at 21:48
+
+Gottfrid Svartholm Warg, a Swedish hacker and the creator of file-sharing website Pirate Bay, was pronounced guilty of hacking crimes in Denmark on Thursday. The founder of Pirate Bay along with his21 year old accomplice whose name was not revealed by the court was convicted for illegally accessing systems operated by IT Company CSC.
+
+It was the biggest hacking case ever conducted in Denmark. Mr. Gottfrid could be served with a 6 year imprisonment sentence. He has already spent 11 months in prison. The Swede along with his 21 year old accomplice were charged for hacking into computer mainframes of US IT giant CSC and stealing hundreds of thousands of social security numbers, criminal records and extradition agreements.
+
+Founder of Pirate Bay Gottfrid Svartholm Found Guilty In Hacking Trial
+
+The prosecution charged the duo, both experts in computer security, for hacking into CSC mainframe computers in April 2012 and maintained access to the systems till August 2012.
+
+Lawyers for the duo however claimed that it was a case of mistaken identity and the crimes were done by others who had remotely accessed Gottfrid's computer after comprising its security.
+
+The prosecution presented discussion taking place between hackers with the names "Advanced Persistent Terrorist Threat" and "My Evil Twin" as evidence. The people taking part in the discussion were Gottfrid and his IT consultant co-defendant and the topic was security and setup of CSC's databases and systems.
+
+Gottfrid had consistently maintained that his computers were compromised and his version was also supported by well known security expert Jacob Appelbaum who had earlier given evidence in Gottfrid's Swedish trial, a case in which he was partly acquitted.
+
+Meanwhile Gottfrid's lawyer Luise Hoj who was speaking on Denmark's TV2 earlier today said that since it was established that third parties had carried out the act and hence her client should be declared not guilty.
+
+Hoj said, "My recommendation has always been that the investigation has focused on finding clues that point to my client, even though the tracks have also pointed in another direction. I have recommended that the court dismiss the case based on the remote access argument. It is clear that my client's computer has been the subject of remote control, and therefore he is not responsible."
+
+However the Court of Frederiksberg found both Gottfrid and his accomplice guilty of hacking-related offenses and dismissed the defense remote control argument.  Judge Ulla Otken while pronouncing the duo guilty said that the hacking of the CSC was systematic and comprehensive.

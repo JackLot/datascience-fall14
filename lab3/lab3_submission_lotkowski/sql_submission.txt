@@ -1,0 +1,317 @@
+SQL Assignment Submission
+
+=== 1
+
+WITH NumberOfMedals AS 
+	(SELECT countries.name AS country_name, count(medal) AS number_of_medals
+		FROM (results LEFT JOIN players ON results.player_id = players.player_id)
+		LEFT JOIN countries ON countries.country_id = players.country_id
+		GROUP BY countries.name)
+SELECT * FROM NumberOfMedals;
+
+**************** RESULT ***************************************************************
+
+               country_name               | number_of_medals 
+------------------------------------------+------------------
+ Costa Rica                               |                2
+ Latvia                                   |                2
+ Estonia                                  |                2
+ Eritrea                                  |                1
+ Turkey                                   |                1
+ Germany                                  |               30
+ France                                   |               12
+ Algeria                                  |                4
+ Slovenia                                 |                1
+ Japan                                    |               21
+ Jamaica                                  |               29
+ Spain                                    |                4
+ Ukraine                                  |               13 ...
+
+ ** Query produces a total of 58 rows, a sampling is shown above
+
+=============================================================================================
+
+=== 2 a
+
+WITH rNull AS (SELECT * FROM r WHERE c IS NULL),
+	sNull AS (SELECT * FROM s WHERE c IS NULL)
+(SELECT a, b, rNull.c, d FROM rNull, sNull) UNION (SELECT a, b, r.c, d FROM r JOIN s ON r.c = s.c);
+
+**************** RESULT ***************************************************************
+
+     a      | b  | c  |     d      
+------------+----+----+------------
+ a3         | 30 | 30 | d1        
+ a4         |  0 |    | d2        
+(2 rows)
+
+=============================================================================================
+
+=== 2 b
+
+WITH rNull AS (SELECT a, b, r.c, s.d FROM r LEFT OUTER JOIN s ON r.c = s.c WHERE r.c IS NULL),
+	sNull AS (SELECT r.a, r.b, s.c, s.d FROM s LEFT OUTER JOIN r ON s.c = r.c WHERE s.c IS NULL)
+(SELECT a, b, c, d FROM rNull) UNION (SELECT a, b, c, d FROM sNull) UNION (SELECT a, b, r.c, d FROM r JOIN s ON r.c = s.c);
+
+**************** RESULT ***************************************************************
+
+     a      | b  | c  |     d      
+------------+----+----+------------
+ a3         | 30 | 30 | d1        
+            |    |    | d2        
+ a4         |  0 |    | 
+(3 rows)
+
+=============================================================================================
+
+=== 3
+
+CREATE FUNCTION insert_into_teammedals() RETURNS trigger AS $_$
+
+	DECLARE
+		etype INTEGER;
+		cid VARCHAR;
+    BEGIN
+
+		IF (TG_OP = 'DELETE') THEN
+			SELECT INTO etype sum(is_team_event) FROM events WHERE event_id = OLD.event_id;
+			SELECT INTO cid country_id FROM players WHERE player_id = OLD.player_id LIMIT 1;
+		ELSEIF (TG_OP = 'INSERT') THEN
+			SELECT INTO etype sum(is_team_event) FROM events WHERE event_id = NEW.event_id;
+			SELECT INTO cid country_id FROM players WHERE player_id = NEW.player_id LIMIT 1;
+		END IF;
+
+		IF etype > 0 THEN
+
+			IF (TG_OP = 'DELETE') THEN
+
+				DELETE FROM TeamMedals 
+					WHERE event_id = OLD.event_id 
+						AND country_id = cid 
+						AND medal = OLD.medal 
+						AND result = OLD.result;
+
+				IF NOT FOUND THEN RETURN NULL; END IF;
+
+				RETURN OLD;
+
+			ELSEIF (TG_OP = 'INSERT') THEN
+
+				INSERT INTO teammedals (event_id, country_id, medal, result)
+					SELECT NEW.event_id, cid, NEW.medal, NEW.result;
+				RETURN NEW;
+
+			END IF;
+
+		END IF;
+
+		RETURN NULL;
+
+    END;
+$_$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER updateTeamMedals AFTER INSERT OR DELETE ON results FOR EACH ROW EXECUTE PROCEDURE insert_into_teammedals();
+
+**************** RESULT ***************************************************************
+
+olympics=# INSERT INTO results VALUES ('E90', 'PETTIANT01', 'GOLD', 12.3);
+INSERT 0 1
+
+olympics=# SELECT * FROM results WHERE event_id='E90' AND player_id = 'PETTIANT01';
+ event_id | player_id  |  medal  | result 
+----------+------------+---------+--------
+ E90      | PETTIANT01 | GOLD    |   12.3
+(1 row)
+
+olympics=# SELECT country_id FROM players WHERE player_id = 'PETTIANT01';
+ country_id 
+------------
+ USA
+(1 row)
+
+olympics=# SELECT * FROM teammedals WHERE event_id='E90' AND country_id = 'USA' AND result = 12.3;
+ event_id | country_id |  medal  | result 
+----------+------------+---------+--------
+ E90      | USA        | GOLD    |   12.3 
+(1 row)
+
+
+olympics=# DELETE FROM results WHERE event_id='E90' AND player_id = 'PETTIANT01';
+DELETE 1
+
+olympics=# SELECT * FROM results WHERE event_id='E90' AND player_id = 'PETTIANT01';
+ event_id | player_id | medal | result 
+----------+-----------+-------+--------
+(0 rows)
+
+olympics=# SELECT * FROM teammedals WHERE event_id='E90' AND country_id = 'USA' AND result = 12.3;
+ event_id | country_id | medal | result 
+----------+------------+-------+--------
+(0 rows)
+
+
+=============================================================================================
+
+=== 4
+
+CREATE FUNCTION get_usa_golds() RETURNS TEXT AS $_$
+
+	DECLARE
+		xmloutput TEXT;
+		eid VARCHAR;
+		pname VARCHAR;
+		ename VARCHAR;
+		curs CURSOR FOR SELECT * FROM (SELECT events.event_id, events.name AS eventname, medals.name AS playername 
+			FROM (SELECT event_id, name FROM results JOIN players ON results.player_id = players.player_id 
+			WHERE medal = 'GOLD' AND country_id = 'USA' ORDER BY event_id) AS medals JOIN events ON medals.event_id = events.event_id WHERE events.olympic_id = 'ATH2004') AS usagoldsath;
+
+    BEGIN
+
+    	xmloutput := '<USA_GOLDS>';
+    	eid := '';
+
+    	FOR medal IN curs LOOP
+
+    		IF (eid = medal.event_id) THEN
+
+    			xmloutput := xmloutput || '<player>' || medal.playername || '</player>';
+
+    		ELSE
+
+    			IF (eid != '') THEN
+    				xmloutput := xmloutput || '</medal>';
+    			END IF;
+    			xmloutput := xmloutput || '<medal>';
+    			xmloutput := xmloutput || '<event>' || medal.eventname || '</event>';
+    			xmloutput := xmloutput || '<player>' || medal.playername || '</player>';
+
+    		END IF;
+    	
+	    	eid := medal.event_id;
+
+    	END LOOP;
+
+    	RETURN xmloutput || '</medal></USA_GOLDS>';
+	
+    END;
+$_$ LANGUAGE 'plpgsql';
+
+**************** RESULT ***************************************************************
+olympics=# select get_usa_golds();
+
+get_usa_golds
+---------------------------------------------------------------------------------------------------------
+ <USA_GOLDS><medal><event>100m Backstroke Men</event><player>Aaron Peirsol</player></medal><medal><event>100m Backstroke Women</event><player>Natalie Coughlin</player></medal><medal><event>100m Butterfly Men</event><player>Michael Phelps</player></medal><medal><event>100m Hurdles Women</event><player>Joanna Hayes</player></medal><medal><event>100m Men</event><player>Justin Gatlin</player></medal><medal><event>200m Backstroke Men</event><player>Aaron Peirsol</player></medal><medal><event>200m Breaststroke Women</event><player>Amanda Beard</player></medal><medal><event>200m Butterfly Men</event><player>Michael Phelps</player></medal><medal><event>200m Individual Medley Men</event><player>Michael Phelps</player></medal><medal><event>200m Men</event><player>Shawn Crawford</player></medal><medal><event>400m Individual Medley Men</event><player>Michael Phelps</player></medal><medal><event>400m Men</event><player>Jeremy Wariner</player></medal><medal><event>4x100m Medley Relay Men</event><player>Neil Walker</player><player>Michael Phelps</player><player>Jason Lezak</player><player>Brendan Hansen</player><player>Lenny Krayzelburg</player><player>Ian Crocker</player><player>Aaron Peirsol</player></medal><medal><event>4x200m Freestyle Relay Men</event><player>Ryan Lochte</player><player>Michael Phelps</player><player>Peter Vanderkaay</player><player>Scott Goldblatt</player><player>Klete Keller</player></medal><medal><event>4x200m Freestyle Relay Women</event><player>Lindsay Benko</player><player>Dana Vollmer</player><player>Kaitlin Sandeno</player><player>Carly Piper</player><player>Natalie Coughlin</player></medal><medal><event>4x400m Relay Men</event><player>Jeremy Wariner</player><player>Darold Williamson</player><player>Otis Harris Jr</player><player>Derrick Brew</player></medal><medal><event>4x400m Relay Women</event><player>Sanya Richards</player><player>Monique Hennagan</player><player>Deedee Trotter</player><player>Monique Henderson</player></medal><medal><event>50m Freestyle Men</event><player>Gary Hall Jr.</player></medal><medal><event>Long Jump Men</event><player>Dwight Phillips</player></medal><medal><event>Pole Vault Men</event><player>Timothy Mack</player></medal></USA_GOLDS>
+(1 row)
+
+The above text nicely formatted using an online XML formatter to add new lines and tabs:
+
+<USA_GOLDS>
+    <medal>
+        <event>100m Backstroke Men</event>
+        <player>Aaron Peirsol</player>
+    </medal>
+    <medal>
+        <event>100m Backstroke Women</event>
+        <player>Natalie Coughlin</player>
+    </medal>
+    <medal>
+        <event>100m Butterfly Men</event>
+        <player>Michael Phelps</player>
+    </medal>
+    <medal>
+        <event>100m Hurdles Women</event>
+        <player>Joanna Hayes</player>
+    </medal>
+    <medal>
+        <event>100m Men</event>
+        <player>Justin Gatlin</player>
+    </medal>
+    <medal>
+        <event>200m Backstroke Men</event>
+        <player>Aaron Peirsol</player>
+    </medal>
+    <medal>
+        <event>200m Breaststroke Women</event>
+        <player>Amanda Beard</player>
+    </medal>
+    <medal>
+        <event>200m Butterfly Men</event>
+        <player>Michael Phelps</player>
+    </medal>
+    <medal>
+        <event>200m Individual Medley Men</event>
+        <player>Michael Phelps</player>
+    </medal>
+    <medal>
+        <event>200m Men</event>
+        <player>Shawn Crawford</player>
+    </medal>
+    <medal>
+        <event>400m Individual Medley Men</event>
+        <player>Michael Phelps</player>
+    </medal>
+    <medal>
+        <event>400m Men</event>
+        <player>Jeremy Wariner</player>
+    </medal>
+    <medal>
+        <event>4x100m Medley Relay Men</event>
+        <player>Neil Walker</player>
+        <player>Michael Phelps</player>
+        <player>Jason Lezak</player>
+        <player>Brendan Hansen</player>
+        <player>Lenny Krayzelburg</player>
+        <player>Ian Crocker</player>
+        <player>Aaron Peirsol</player>
+    </medal>
+    <medal>
+        <event>4x200m Freestyle Relay Men</event>
+        <player>Ryan Lochte</player>
+        <player>Michael Phelps</player>
+        <player>Peter Vanderkaay</player>
+        <player>Scott Goldblatt</player>
+        <player>Klete Keller</player>
+    </medal>
+    <medal>
+        <event>4x200m Freestyle Relay Women</event>
+        <player>Lindsay Benko</player>
+        <player>Dana Vollmer</player>
+        <player>Kaitlin Sandeno</player>
+        <player>Carly Piper</player>
+        <player>Natalie Coughlin</player>
+    </medal>
+    <medal>
+        <event>4x400m Relay Men</event>
+        <player>Jeremy Wariner</player>
+        <player>Darold Williamson</player>
+        <player>Otis Harris Jr</player>
+        <player>Derrick Brew</player>
+    </medal>
+    <medal>
+        <event>4x400m Relay Women</event>
+        <player>Sanya Richards</player>
+        <player>Monique Hennagan</player>
+        <player>Deedee Trotter</player>
+        <player>Monique Henderson</player>
+    </medal>
+    <medal>
+        <event>50m Freestyle Men</event>
+        <player>Gary Hall Jr.</player>
+    </medal>
+    <medal>
+        <event>Long Jump Men</event>
+        <player>Dwight Phillips</player>
+    </medal>
+    <medal>
+        <event>Pole Vault Men</event>
+        <player>Timothy Mack</player>
+    </medal>
+</USA_GOLDS>
+
+=============================================================================================
+
+
+NOTES (FOR ME):
+delete from pg_proc where proname = 'insert_into_teammedals';
+delete from pg_trigger where tgname = 'updateteammedals';

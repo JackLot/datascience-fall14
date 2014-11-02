@@ -31,7 +31,7 @@ SELECT count(*) FROM events WHERE result_noted_in = 'points' AND olympic_id = 'S
 =============================================================================================
 
 === 4
-WITH 	syd_events AS (SELECT event_id FROM events WHERE olympic_id = 'SYD2000'),
+WITH syd_events AS (SELECT event_id FROM events WHERE olympic_id = 'SYD2000'),
 	syd_results AS (SELECT syd_events.event_id, player_id, medal 
 		FROM syd_events LEFT OUTER JOIN results 
 		ON syd_events.event_id = results.event_id),
@@ -53,7 +53,67 @@ country_id
 WITH num_players AS (SELECT country_id, count(country_id) FROM players GROUP BY country_id)
 SELECT name country_name, count num_players FROM num_players NATURAL JOIN countries;
 **************** RESULT ***************************************************************
-result returns too many tuples to be efficently displayed on this document
+               country_name               | num_players 
+------------------------------------------+-------------
+ Algeria                                  |           4
+ Argentina                                |           1
+ Australia                                |          34
+ Austria                                  |           2
+ The Bahamas                              |           5
+ Barbados                                 |           1
+ Belarus                                  |           7
+ Brazil                                   |           9
+ Bulgaria                                 |           1
+ Canada                                   |           1
+ China                                    |           8
+ Cameroon                                 |           1
+ Costa Rica                               |           1
+ Croatia                                  |           1
+ Cuba                                     |          12
+ Czech Republic                           |           3
+ Denmark                                  |           2
+ Dominican Republic                       |           1
+ Eritrea                                  |           1
+ Spain                                    |           4
+ Estonia                                  |           2
+ Ethiopia                                 |          12
+ Finland                                  |           1
+ France                                   |          10
+ United Kingdom                           |          12
+ Germany                                  |          22
+ Greece                                   |           7
+ Hungary                                  |           4
+ Ireland                                  |           1
+ Iceland                                  |           1
+ Italy                                    |          12
+ Jamaica                                  |          18
+ Japan                                    |          16
+ Kazakhstan                               |           2
+ Kenya                                    |          13
+ Saudi Arabia                             |           1
+ Latvia                                   |           2
+ Lithuania                                |           2
+ Morocco                                  |           5
+ Mexico                                   |           3
+ Mozambique                               |           1
+ Netherlands                              |          13
+ Nigeria                                  |          12
+ Norway                                   |           3
+ Poland                                   |           5
+ Portugal                                 |           3
+ Romania                                  |          10
+ South Africa                             |          10
+ Russia                                   |          38
+ Slovenia                                 |           1
+ Sri Lanka                                |           1
+ Slovakia                                 |           1
+ Sweden                                   |           9
+ Trinidad and Tobago                      |           2
+ Turkey                                   |           1
+ Ukraine                                  |           9
+ United States                            |          88
+ Zimbabwe                                 |           1
+(58 rows)
 =============================================================================================
 
 === 6
@@ -119,9 +179,9 @@ event_id
 
 === 9
 WITH bfly AS (SELECT * FROM events WHERE name LIKE '%Butterfly%' AND olympic_id = 'ATH2004'),
-bresults AS (SELECT bfly.event_id, medal, result FROM bfly LEFT OUTER JOIN results ON bfly.event_id = results.event_id WHERE medal <> 'BRONZE'),
-silverResults AS (SELECT event_id, result FROM bresults WHERE medal = 'SILVER'),
-goldResults AS (SELECT event_id, result FROM bresults WHERE medal = 'GOLD')
+	bresults AS (SELECT bfly.event_id, medal, result FROM bfly LEFT OUTER JOIN results ON bfly.event_id = results.event_id WHERE medal <> 'BRONZE'),
+	silverResults AS (SELECT event_id, result FROM bresults WHERE medal = 'SILVER'),
+	goldResults AS (SELECT event_id, result FROM bresults WHERE medal = 'GOLD')
 SELECT goldResults.event_id, ABS(goldResults.result - silverResults.result) distance FROM silverResults JOIN goldResults ON silverResults.event_id = goldResults.event_id;
 **************** RESULT ***************************************************************
  event_id |      distance      
@@ -134,7 +194,7 @@ SELECT goldResults.event_id, ABS(goldResults.result - silverResults.result) dist
 =============================================================================================
 
 === 10
-CREATE TABLE "CountryMedals" AS (WITH tevents AS (SELECT event_id FROM events WHERE is_team_event = 1),
+CREATE TABLE "teammedals" AS (WITH tevents AS (SELECT event_id FROM events WHERE is_team_event = 1),
 	tresults AS (SELECT tevents.event_id, player_id, medal, result FROM tevents LEFT OUTER JOIN results ON results.event_id = tevents.event_id),
 	res_c AS (SELECT event_id, country_id, medal, result FROM tresults NATURAL JOIN players)
 SELECT * FROM res_c);
@@ -178,7 +238,7 @@ SELECT countries.name, coalesce(has1975.count,0) AS count FROM countries LEFT OU
  Mozambique                               |     0
  Netherlands                              |     0 ... ETC ...
 
-There were more tuples but I didn't include them, they are just countries with 0 1975 birthdays
+There were more tuples but I didn't include them: the rest are just countries with 0 1975 birthdays
 
 (58 rows) in total
 =============================================================================================
