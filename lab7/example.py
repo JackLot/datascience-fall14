@@ -78,8 +78,9 @@ def main():
     except Exception:
         log.exeception()
 
+    print ("OwnerId\tAdId\tCTR")
     for row in rows:
-        print row[0], row[1], row[2]
+        print row[0], row[1], row[2]/row[3]
         log.info('\t'.join(row))
 
     session.execute("DROP KEYSPACE " + KEYSPACE)

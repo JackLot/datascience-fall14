@@ -36,3 +36,4 @@ INSERT INTO impressions (OwnerId, AdId, numImpressions) VALUES (3,1,32);
 INSERT INTO impressions (OwnerId, AdId, numImpressions) VALUES (3,2,23);
 INSERT INTO impressions (OwnerId, AdId, numImpressions) VALUES (3,3,44);
 INSERT INTO impressions (OwnerId, AdId, numImpressions) VALUES (3,4,36);
+

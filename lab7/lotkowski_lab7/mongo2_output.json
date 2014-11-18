@@ -1,0 +1,211 @@
+MongoDB shell version: 2.4.9
+connecting to: localhost/test
+{
+	"result" : [
+		{
+			"_id" : "AK",
+			"totalpopulation" : 544698
+		},
+		{
+			"_id" : "AL",
+			"totalpopulation" : 4040587
+		},
+		{
+			"_id" : "AR",
+			"totalpopulation" : 2350725
+		},
+		{
+			"_id" : "AZ",
+			"totalpopulation" : 3665228
+		},
+		{
+			"_id" : "CA",
+			"totalpopulation" : 29754890
+		},
+		{
+			"_id" : "CO",
+			"totalpopulation" : 3293755
+		},
+		{
+			"_id" : "CT",
+			"totalpopulation" : 3287116
+		},
+		{
+			"_id" : "DC",
+			"totalpopulation" : 606900
+		},
+		{
+			"_id" : "DE",
+			"totalpopulation" : 666168
+		},
+		{
+			"_id" : "FL",
+			"totalpopulation" : 12686644
+		},
+		{
+			"_id" : "GA",
+			"totalpopulation" : 6478216
+		},
+		{
+			"_id" : "HI",
+			"totalpopulation" : 1108229
+		},
+		{
+			"_id" : "IA",
+			"totalpopulation" : 2776420
+		},
+		{
+			"_id" : "ID",
+			"totalpopulation" : 1006749
+		},
+		{
+			"_id" : "IL",
+			"totalpopulation" : 11427576
+		},
+		{
+			"_id" : "IN",
+			"totalpopulation" : 5544136
+		},
+		{
+			"_id" : "KS",
+			"totalpopulation" : 2475285
+		},
+		{
+			"_id" : "KY",
+			"totalpopulation" : 3675484
+		},
+		{
+			"_id" : "LA",
+			"totalpopulation" : 4217595
+		},
+		{
+			"_id" : "MA",
+			"totalpopulation" : 6016425
+		},
+		{
+			"_id" : "MD",
+			"totalpopulation" : 4781379
+		},
+		{
+			"_id" : "ME",
+			"totalpopulation" : 1226648
+		},
+		{
+			"_id" : "MI",
+			"totalpopulation" : 9295297
+		},
+		{
+			"_id" : "MN",
+			"totalpopulation" : 4372982
+		},
+		{
+			"_id" : "MO",
+			"totalpopulation" : 5110648
+		},
+		{
+			"_id" : "MS",
+			"totalpopulation" : 2573216
+		},
+		{
+			"_id" : "MT",
+			"totalpopulation" : 798948
+		},
+		{
+			"_id" : "NC",
+			"totalpopulation" : 6628637
+		},
+		{
+			"_id" : "ND",
+			"totalpopulation" : 638272
+		},
+		{
+			"_id" : "NE",
+			"totalpopulation" : 1578139
+		},
+		{
+			"_id" : "NH",
+			"totalpopulation" : 1109252
+		},
+		{
+			"_id" : "NJ",
+			"totalpopulation" : 7730188
+		},
+		{
+			"_id" : "NM",
+			"totalpopulation" : 1515069
+		},
+		{
+			"_id" : "NV",
+			"totalpopulation" : 1201833
+		},
+		{
+			"_id" : "NY",
+			"totalpopulation" : 17990402
+		},
+		{
+			"_id" : "OH",
+			"totalpopulation" : 10846517
+		},
+		{
+			"_id" : "OK",
+			"totalpopulation" : 3145585
+		},
+		{
+			"_id" : "OR",
+			"totalpopulation" : 2842321
+		},
+		{
+			"_id" : "PA",
+			"totalpopulation" : 11881643
+		},
+		{
+			"_id" : "RI",
+			"totalpopulation" : 1003218
+		},
+		{
+			"_id" : "SC",
+			"totalpopulation" : 3486703
+		},
+		{
+			"_id" : "SD",
+			"totalpopulation" : 695397
+		},
+		{
+			"_id" : "TN",
+			"totalpopulation" : 4876457
+		},
+		{
+			"_id" : "TX",
+			"totalpopulation" : 16984601
+		},
+		{
+			"_id" : "UT",
+			"totalpopulation" : 1722850
+		},
+		{
+			"_id" : "VA",
+			"totalpopulation" : 6181479
+		},
+		{
+			"_id" : "VT",
+			"totalpopulation" : 562758
+		},
+		{
+			"_id" : "WA",
+			"totalpopulation" : 4866692
+		},
+		{
+			"_id" : "WI",
+			"totalpopulation" : 4891769
+		},
+		{
+			"_id" : "WV",
+			"totalpopulation" : 1793146
+		},
+		{
+			"_id" : "WY",
+			"totalpopulation" : 453528
+		}
+	],
+	"ok" : 1
+}

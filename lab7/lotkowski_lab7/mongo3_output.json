@@ -1,0 +1,364 @@
+MongoDB shell version: 2.4.9
+connecting to: localhost/test
+{
+	"result" : [
+		{
+			"_id" : {
+				"state" : "IN"
+			},
+			"minPopCity" : "WESTPOINT",
+			"minPop" : 145
+		},
+		{
+			"_id" : {
+				"state" : "RI"
+			},
+			"minPopCity" : "CLAYVILLE",
+			"minPop" : 45
+		},
+		{
+			"_id" : {
+				"state" : "MD"
+			},
+			"minPopCity" : "ANNAPOLIS JUNCTI",
+			"minPop" : 32
+		},
+		{
+			"_id" : {
+				"state" : "CT"
+			},
+			"minPopCity" : "EAST KILLINGLY",
+			"minPop" : 25
+		},
+		{
+			"_id" : {
+				"state" : "DC"
+			},
+			"minPopCity" : "PENTAGON",
+			"minPop" : 21
+		},
+		{
+			"_id" : {
+				"state" : "IA"
+			},
+			"minPopCity" : "DOUDS",
+			"minPop" : 15
+		},
+		{
+			"_id" : {
+				"state" : "ND"
+			},
+			"minPopCity" : "TROTTERS",
+			"minPop" : 12
+		},
+		{
+			"_id" : {
+				"state" : "UT"
+			},
+			"minPopCity" : "MODENA",
+			"minPop" : 9
+		},
+		{
+			"_id" : {
+				"state" : "OK"
+			},
+			"minPopCity" : "SOUTHARD",
+			"minPop" : 8
+		},
+		{
+			"_id" : {
+				"state" : "SD"
+			},
+			"minPopCity" : "ZEONA",
+			"minPop" : 8
+		},
+		{
+			"_id" : {
+				"state" : "DE"
+			},
+			"minPopCity" : "BETHEL",
+			"minPop" : 108
+		},
+		{
+			"_id" : {
+				"state" : "NH"
+			},
+			"minPopCity" : "WEST NOTTINGHAM",
+			"minPop" : 27
+		},
+		{
+			"_id" : {
+				"state" : "MT"
+			},
+			"minPopCity" : "MOSBY",
+			"minPop" : 7
+		},
+		{
+			"_id" : {
+				"state" : "MS"
+			},
+			"minPopCity" : "CHUNKY",
+			"minPop" : 79
+		},
+		{
+			"_id" : {
+				"state" : "WI"
+			},
+			"minPopCity" : "CLAM LAKE",
+			"minPop" : 2
+		},
+		{
+			"_id" : {
+				"state" : "NV"
+			},
+			"minPopCity" : "TUSCARORA",
+			"minPop" : 1
+		},
+		{
+			"_id" : {
+				"state" : "MA"
+			},
+			"minPopCity" : "BUCKLAND",
+			"minPop" : 16
+		},
+		{
+			"_id" : {
+				"state" : "PA"
+			},
+			"minPopCity" : "HAMILTON",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "VA"
+			},
+			"minPopCity" : "WALLOPS ISLAND",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "AL"
+			},
+			"minPopCity" : "ALLEN",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "NE"
+			},
+			"minPopCity" : "LAKESIDE",
+			"minPop" : 5
+		},
+		{
+			"_id" : {
+				"state" : "IL"
+			},
+			"minPopCity" : "ANCONA",
+			"minPop" : 38
+		},
+		{
+			"_id" : {
+				"state" : "WA"
+			},
+			"minPopCity" : "BENGE",
+			"minPop" : 2
+		},
+		{
+			"_id" : {
+				"state" : "TN"
+			},
+			"minPopCity" : "ALLRED",
+			"minPop" : 2
+		},
+		{
+			"_id" : {
+				"state" : "GA"
+			},
+			"minPopCity" : "FORT STEWART",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "TX"
+			},
+			"minPopCity" : "FULTON",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "HI"
+			},
+			"minPopCity" : "NINOLE",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "WY"
+			},
+			"minPopCity" : "LOST SPRINGS",
+			"minPop" : 6
+		},
+		{
+			"_id" : {
+				"state" : "AZ"
+			},
+			"minPopCity" : "HUALAPAI",
+			"minPop" : 2
+		},
+		{
+			"_id" : {
+				"state" : "LA"
+			},
+			"minPopCity" : "FORDOCHE",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "AR"
+			},
+			"minPopCity" : "TOMATO",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "MN"
+			},
+			"minPopCity" : "JOHNSON",
+			"minPop" : 12
+		},
+		{
+			"_id" : {
+				"state" : "NC"
+			},
+			"minPopCity" : "GLOUCESTER",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "MO"
+			},
+			"minPopCity" : "BENDAVIS",
+			"minPop" : 44
+		},
+		{
+			"_id" : {
+				"state" : "OH"
+			},
+			"minPopCity" : "ISLE SAINT GEORG",
+			"minPop" : 38
+		},
+		{
+			"_id" : {
+				"state" : "MI"
+			},
+			"minPopCity" : "LELAND",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "NJ"
+			},
+			"minPopCity" : "IMLAYSTOWN",
+			"minPop" : 17
+		},
+		{
+			"_id" : {
+				"state" : "NM"
+			},
+			"minPopCity" : "ALGODONES",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "KY"
+			},
+			"minPopCity" : "BROWDER",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "VT"
+			},
+			"minPopCity" : "UNIV OF VERMONT",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "ID"
+			},
+			"minPopCity" : "KEUTERVILLE",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "SC"
+			},
+			"minPopCity" : "QUINBY",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "AK"
+			},
+			"minPopCity" : "CHEVAK",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "FL"
+			},
+			"minPopCity" : "CECIL FIELD NAS",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "KS"
+			},
+			"minPopCity" : "ARNOLD",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "CO"
+			},
+			"minPopCity" : "CHEYENNE MTN AFB",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "NY"
+			},
+			"minPopCity" : "RAQUETTE LAKE",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "CA"
+			},
+			"minPopCity" : "TWIN BRIDGES",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "OR"
+			},
+			"minPopCity" : "KENT",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "WV"
+			},
+			"minPopCity" : "MOUNT CARBON",
+			"minPop" : 0
+		},
+		{
+			"_id" : {
+				"state" : "ME"
+			},
+			"minPopCity" : "BUSTINS ISLAND",
+			"minPop" : 0
+		}
+	],
+	"ok" : 1
+}

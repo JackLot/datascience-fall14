@@ -1,0 +1,22 @@
+CREATE DATABASE ctrdenom;
+
+CREATE TABLE clickimpressions (
+    OwnerId int,
+    AdId int,
+    numImpressions int,
+    numClicks int,
+    PRIMARY KEY (OwnerId, AdId)
+);
+
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (1,1,10,1);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (1,2,5,0);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (1,3,20,1);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (1,4,15,0);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (2,1,10,0);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (2,2,55,0);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (2,3,13,0);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (2,4,21,0);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (3,1,32,1);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (3,2,23,0);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (3,3,44,2);
+INSERT INTO clickimpressions (OwnerId, AdId, numImpressions, numClicks) VALUES (3,4,36,1);

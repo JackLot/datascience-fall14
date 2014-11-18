@@ -229,38 +229,9 @@ db.zipcodes.aggregate([
     { $match: { pop: { $lt: 5000000 } } }
 ])
 
-{
-    "result" : [
-        {
-            "_id" : {
-                "state" : "AK",
-                "city" : "WRANGELL"
-            },
-            "pop" : 2573
-        },
-        {
-            "_id" : {
-                "state" : "AK",
-                "city" : "METLAKATLA"
-            },
-            "pop" : 1469
-        },
-        {
-            "_id" : {
-                "state" : "AK",
-                "city" : "THORNE BAY"
-            },
-            "pop" : 744
-        },
-        {
-            "_id" : {
-                "state" : "AK",
-                "city" : "SITKA"
-            },
-            "pop" : 8638
-        },
+mongo localhost/test --eval 'printjson( db.zipcodes.aggregate([ { $group: { _id: { state : "$state", city : "$city" }, pop : { $sum : "$pop" } } }, { $match: { pop: { $lt: 5000000 } } } ]) )' >> mongo1_output.json
 
-        ... much more, this is just a sample of the output
+*** output can be found in the file mongo1_output.json
 
 
 -----------------------------( 2 )------------------------------
@@ -270,30 +241,9 @@ db.zipcodes.aggregate([
     { $sort: { _id: 1 } }
 ])
 
-{
-    "result" : [
-        {
-            "_id" : "AK",
-            "totalpopulation" : 544698
-        },
-        {
-            "_id" : "AL",
-            "totalpopulation" : 4040587
-        },
-        {
-            "_id" : "AR",
-            "totalpopulation" : 2350725
-        },
-        {
-            "_id" : "AZ",
-            "totalpopulation" : 3665228
-        },
-        {
-            "_id" : "CA",
-            "totalpopulation" : 29754890
-        },
+mongo localhost/test --eval 'printjson( db.zipcodes.aggregate([ { $group: { _id: "$state", totalpopulation: { $sum: "$pop" } } }, { $sort: { _id: 1 } } ]) )' >> mongo2_output.json
 
-        ... much more, this is just a sample of the output
+*** output can be found in the file mongo2_output.json
 
 
 -----------------------------( 3 )------------------------------
@@ -304,38 +254,9 @@ db.zipcodes.aggregate([
     { $group : { _id: { state : "$_id.state" } , minPopCity: { $first: "$_id.city" },  minPop : { $first : "$pop" } } }
 ])
 
-{
-    "result" : [
-        {
-            "_id" : {
-                "state" : "IN"
-            },
-            "minPopCity" : "WESTPOINT",
-            "minPop" : 145
-        },
-        {
-            "_id" : {
-                "state" : "RI"
-            },
-            "minPopCity" : "CLAYVILLE",
-            "minPop" : 45
-        },
-        {
-            "_id" : {
-                "state" : "MD"
-            },
-            "minPopCity" : "ANNAPOLIS JUNCTI",
-            "minPop" : 32
-        },
-        {
-            "_id" : {
-                "state" : "CT"
-            },
-            "minPopCity" : "EAST KILLINGLY",
-            "minPop" : 25
-        },
+mongo localhost/test --eval 'printjson( db.zipcodes.aggregate([ { $group : { _id: { state : "$state", city : "$city" }, pop : { $sum : "$pop" } } }, { $sort: { pop: 1 } }, { $group : { _id: { state : "$_id.state" } , minPopCity: { $first: "$_id.city" },  minPop : { $first : "$pop" } } } ]) )' >> mongo2_output.json
 
-        ... much more, this is just a sample of the output
+*** output can be found in the file mongo3_output.json
 
 
 -----------------------------( MONGO MAP REDUCE )------------------------------
@@ -387,18 +308,10 @@ db.zipcodes.mapReduce(
         out: "avg_populations",
         finalize: function(key, val){
                 val.avgPop = val.statePop / val.cityCount;
-                val.cities = []
                 return val;
             }
     }
 )
 
 
-{ "_id" : "DE", "value" : { "statePop" : 140950, "cityCount" : 22, "processed" : 24, "cities" : [ ], "avgPop" : 6406.818181818182 } }
-{ "_id" : "FL", "value" : { "statePop" : 343615, "cityCount" : 15, "processed" : 34, "cities" : [ ], "avgPop" : 22907.666666666668 } }
-{ "_id" : "GA", "value" : { "statePop" : 244259, "cityCount" : 24, "processed" : 30, "cities" : [ ], "avgPop" : 10177.458333333334 } }
-{ "_id" : "HI", "value" : { "statePop" : 1108229, "cityCount" : 70, "processed" : 80, "cities" : [ ], "avgPop" : 15831.842857142858 } }
-{ "_id" : "IA", "value" : { "statePop" : 215468, "cityCount" : 31, "processed" : 36, "cities" : [ ], "avgPop" : 6950.580645161291 } }
-{ "_id" : "ID", "value" : { "statePop" : 144447, "cityCount" : 39, "processed" : 40, "cities" : [ ], "avgPop" : 3703.769230769231 } }
-
-... much more, this is just a sample of the output
+*** output can be found in the file mongo3_output.json
