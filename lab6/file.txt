@@ -1,7 +1,0 @@
-This is an HDFS test hadoop fs -mkdir /tmp1 hadoop fs -put file.txt /tmp1/ hadoop fs -cat /tmp1/file.txt
-This is an HDFS test hadoop fs -mkdir /tmp1 hadoop fs -put file.txt /tmp1/ hadoop fs -cat /tmp1/file.txt
-This is an HDFS test hadoop fs -mkdir /tmp1 hadoop fs -put file.txt /tmp1/ hadoop fs -cat /tmp1/file.txt
-This is an HDFS test hadoop fs -mkdir /tmp1 hadoop fs -put file.txt /tmp1/ hadoop fs -cat /tmp1/file.txt
-This is an HDFS test hadoop fs -mkdir /tmp1 hadoop fs -put file.txt /tmp1/ hadoop fs -cat /tmp1/file.txt
-This is an HDFS test hadoop fs -mkdir /tmp1 hadoop fs -put file.txt /tmp1/ hadoop fs -cat /tmp1/file.txt
-This is an HDFS test hadoop fs -mkdir /tmp1 hadoop fs -put file.txt /tmp1/ hadoop fs -cat /tmp1/file.txt
