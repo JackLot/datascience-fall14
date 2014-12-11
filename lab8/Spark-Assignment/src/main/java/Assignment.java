@@ -29,9 +29,13 @@ import org.apache.spark.streaming.api.java.JavaReceiverInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.List;
+import java.util.ArrayList;
 
 public final class Assignment {
-    private static final Pattern SPACE = Pattern.compile(" ");
+    private static final String SEARCHWORD = "#Obama";
+    private static final Pattern SPACE = Pattern.compile(SEARCHWORD, Pattern.CASE_INSENSITIVE);
 
     public static void main(String[] args) {
 
@@ -46,22 +50,46 @@ public final class Assignment {
         JavaReceiverInputDStream<String> lines = ssc.socketTextStream(
                 "localhost", Integer.parseInt("9999"), StorageLevels.MEMORY_AND_DISK_SER);
 
-        JavaDStream<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
+        JavaDStream<String> words = lines.flatMap(
+            new FlatMapFunction<String, String>() {
+
                 @Override
                 public Iterable<String> call(String x) {
-                return Lists.newArrayList(SPACE.split(x));
+
+                    List<String> allMatches = new ArrayList<String>();
+
+                    Matcher matcher = SPACE.matcher(x);
+
+                    while (matcher.find()) {
+                       allMatches.add(matcher.group().toLowerCase());
+                    }
+
+                    return Lists.newArrayList(allMatches.toArray(new String[0]));
                 }
-                });
+
+            });
 
         JavaPairDStream<String, Integer> wordCounts = words.mapToPair(
                 new PairFunction<String, String, Integer>() {
+                
                 @Override
                 public Tuple2<String, Integer> call(String s) {
-                return new Tuple2<String, Integer>(s, 1);
+                    return new Tuple2<String, Integer>(s, 1);
                 }
-                });
 
-        wordCounts.print();
+            });
+
+        // Reduce function adding two integers, defined separately for clarity
+        Function2<Integer, Integer, Integer> reduceFunc = new Function2<Integer, Integer, Integer>() {
+          @Override public Integer call(Integer i1, Integer i2) throws Exception {
+            return i1 + i2;
+          }
+        };
+
+        JavaPairDStream<String, Integer> windowedWordCounts = 
+            wordCounts.reduceByKeyAndWindow(reduceFunc, new Duration(30000), new Duration(10000));
+
+        windowedWordCounts.print();
 
         ssc.start();
 

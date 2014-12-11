@@ -83,10 +83,10 @@ public class TwitterSampleSpout extends BaseRichSpout {
 	//------------------------------------------------------------------------
 
 	public TwitterSampleSpout() {		
-		this.consumerKey = "aqMhHjo25IFTlQqmT3A1YNnPVs";
-		this.consumerSecret = "bdGjNYhusZSbzLQ6695veAJG9KtkBtAHYZwwLEnfGujqGz5j987";
-		this.accessToken = "c11412092-ks3eYiWAL8SKcTAJ3SMDdAkBJss7gOHMTk2YlwPFZ";
-		this.accessTokenSecret = "diDFa3JCYbgBv3D5MZei2xdHkGdZcDEqLGJcbNx7P5fKmv";
+		this.consumerKey = "2L4g7aIN4HbHNepOatGd3n8EV"; //"aqMhHjo25IFTlQqmT3A1YNnPVs";
+		this.consumerSecret = "7SIxh2QXKAN7SuXSHd4IhYSi4QZlY3hFKSv5xrn1pHnH5wIC3A"; //"bdGjNYhusZSbzLQ6695veAJG9KtkBtAHYZwwLEnfGujqGz5j987";
+		this.accessToken = "485026228-GfZ9zaMC7FMclh9eyKTOv1eCRK3Kmi5F6HvgfIVq"; //"c11412092-ks3eYiWAL8SKcTAJ3SMDdAkBJss7gOHMTk2YlwPFZ";
+		this.accessTokenSecret = "fXOturuAfc05eGADT5tBqqhpIflDvNjqImq2D9Lb1aAvn"; //"diDFa3JCYbgBv3D5MZei2xdHkGdZcDEqLGJcbNx7P5fKmv";
 		this.keyWords = new String[1];
 		this.keyWords[0] = "obama"; /* Filters All Tweets with word Obama */
 	}
@@ -129,24 +129,24 @@ public class TwitterSampleSpout extends BaseRichSpout {
 
 		};
 
-		TwitterStream twitterStream = new TwitterStreamFactory(
+		_twitterStream = new TwitterStreamFactory(
 				new ConfigurationBuilder().setJSONStoreEnabled(true).build())
 				.getInstance();
 
-		twitterStream.addListener(listener);
-		twitterStream.setOAuthConsumer(consumerKey, consumerSecret);
+		_twitterStream.addListener(listener);
+		_twitterStream.setOAuthConsumer(consumerKey, consumerSecret);
 		AccessToken token = new AccessToken(accessToken, accessTokenSecret);
-		twitterStream.setOAuthAccessToken(token);
+		_twitterStream.setOAuthAccessToken(token);
 		
 		if (keyWords.length == 0) {
 
-			twitterStream.sample();
+			_twitterStream.sample();
 		}
 
 		else {
 
 			FilterQuery query = new FilterQuery().track(keyWords);
-			twitterStream.filter(query);
+			_twitterStream.filter(query);
 		}
 
 	}
